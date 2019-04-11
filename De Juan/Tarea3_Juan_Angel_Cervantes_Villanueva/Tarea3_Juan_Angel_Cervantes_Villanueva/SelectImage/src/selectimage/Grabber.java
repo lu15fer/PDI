@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package selectimage;
+package pdi_proyecto4;
 
 import java.awt.Image;
 import java.awt.Toolkit;
