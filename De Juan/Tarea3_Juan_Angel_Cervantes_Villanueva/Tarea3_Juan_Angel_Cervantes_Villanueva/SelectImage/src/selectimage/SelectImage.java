@@ -4,53 +4,41 @@
  * and open the template in the editor.
  */
 package selectimage;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.PixelGrabber;
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.image.ColorModel;
-import java.awt.image.ImageObserver;
-import java.awt.image.PixelGrabber;
-import javax.swing.Icon;
 
 /**
  *
  * @author banan_000
  */
 public class SelectImage extends javax.swing.JFrame {
-    
-    JFileChooser myDocumento, extra;
-    Integer alto;
-    Integer ancho;
-    Icon image;
-    File doc2;
-    Integer aux;
 
+    JFileChooser Busca = new JFileChooser();
 
-   JFileChooser Global=new JFileChooser(); 
-   
     /**
      * Creates new form SelectImage
      */
-  
     public SelectImage() {
-        myDocumento = new JFileChooser();
         initComponents();
-        this.setResizable(true);
-        this.setSize(620, 200);
-
+        setExtendedState(NORMAL);
+        this.setLocationRelativeTo(this);
     }
 
     /**
@@ -63,27 +51,27 @@ public class SelectImage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         Ancho = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         Largo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        label1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         X = new javax.swing.JTextField();
-        label2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         Y = new javax.swing.JTextField();
-        label3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         R = new javax.swing.JTextField();
-        label4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         G = new javax.swing.JTextField();
-        label6 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         B = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
-                formMouseMoved(evt);
+                jPanel1MouseMoved(evt);
             }
         });
 
@@ -91,11 +79,11 @@ public class SelectImage extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+            .addGap(0, 301, Short.MAX_VALUE)
         );
 
         jButton1.setText("Seleccionar");
@@ -115,15 +103,21 @@ public class SelectImage extends javax.swing.JFrame {
 
         jLabel4.setText("Largo");
 
-        label1.setText("   X");
+        jLabel5.setText("    X");
 
-        label2.setText("    Y");
+        X.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                XActionPerformed(evt);
+            }
+        });
 
-        label3.setText("    R");
+        jLabel6.setText("     Y");
 
-        label4.setText("    G");
+        jLabel7.setText("     R");
 
-        label6.setText("    B");
+        jLabel8.setText("     G");
+
+        jLabel9.setText("     B");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,31 +130,33 @@ public class SelectImage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Ancho))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Largo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(X, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Y, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(R, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(G, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(B, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addComponent(Largo))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(X, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addComponent(Y, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(R, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(G, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(B, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -169,40 +165,30 @@ public class SelectImage extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Largo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Ancho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(label1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(X, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(R, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(G, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(B, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(45, 45, 45))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Ancho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Largo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(X, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(R, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(G, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(B, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -210,121 +196,74 @@ public class SelectImage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        JFileChooser Busca=new JFileChooser();
         Busca.setDialogTitle("Selecciona Imagen");
-        FileNameExtensionFilter ext=new FileNameExtensionFilter("Seleccionar Imagen", "bmp","dib","gif",
-                        "jpg","jpeg","jpe","jfif","png");
+        FileNameExtensionFilter ext = new FileNameExtensionFilter("Seleccionar Imagen", "bmp", "dib", "gif",
+                "jpg", "jpeg", "jpe", "jfif", "png");
         Busca.setFileFilter(ext);
-        Toolkit t=Toolkit.getDefaultToolkit();
+        Toolkit t = Toolkit.getDefaultToolkit();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-       
-        int ancho=java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-        int largo=java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-        
-        if(Busca.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
-                
-                File archivo = new File(Busca.getSelectedFile().toString());
-                int largoimagen=Busca.getHeight();
-                int anchoimagen=Busca.getWidth();
-               
-                    Ancho.setText(Integer.toString(ancho));
-                    Largo.setText(Integer.toString(largo));
-                    
- Global=Busca;
- 
-                
-       //     rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, Busca.getSelectedFile().toString());
+        int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int largo = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+
+        if (Busca.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            ImageIcon imagen = new ImageIcon(Busca.getSelectedFile().toString());
+
+            int largoimagen = imagen.getIconHeight();
+            int anchoimagen = imagen.getIconWidth();
+            Ancho.setText(Integer.toString(anchoimagen));
+            Largo.setText(Integer.toString(largoimagen));     
+                      
+         // Ancho.setText(Integer.toString(jPanel1.getWidth()));
+         // Largo.setText(Integer.toString(jPanel1.getHeight()));
+            jPanel1.setSize(screenSize);
             
+            jPanel1.imageUpdate(imagen, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH);
+            
+            jPanel1.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource(Busca.getSelectedFile().toString())).getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH)));
+           
+            System.out.println(jPanel1.getWidth()+" "+jPanel1.getHeight());
+
+//rsscalelabel.RSScaleLabel.setScaleLabel(jPanel1, Busca.getSelectedFile().toString());
         }
-       /*{                                         
-        myDocumento.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        aux = myDocumento.showOpenDialog(myDocumento);
-        if (aux != null && aux == 0) {
-            doc2 = myDocumento.getSelectedFile();
-            image = new ImageIcon(doc2.getPath());
-            jLabel4.setIcon(image);
-            jTextField1.setText("" + image.getIconHeight() + " pixeles");
-            jTextField2.setText("" + image.getIconWidth() + " pixeles");
-            Integer pixel = image.getIconHeight() * image.getIconWidth();
-            jTextField3.setText("" + pixel + " pixeles");
-            this.setSize(image.getIconWidth(), image.getIconHeight());
-        }
-        extra=myDocumento;
-    }  */
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void AnchoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnchoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AnchoActionPerformed
 
-    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+    private void XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XActionPerformed
         // TODO add your handling code here:
-       /* Image Imagen= Toolkit.getDefaultToolkit().getImage(Global.getSelectedFile().toString());
-        PixelGrabber grabber=new PixelGrabber(Imagen, evt.getX(), evt.getY(),Global.getWidth(),Global.getHeight(), false);
-           Object pixels = grabber.getPixels();
-           System.out.println(Global.getWidth());
-           System.out.println(evt.getX()+ ","+evt.getY());
-           rsscalelabel.RSScaleLabel.setScaleLabel(jLabel1, Global.getSelectedFile().toString());
-           
-       try {
-           if (grabber.grabPixels()){
-               int Ro=ColorModel.getRGBdefault().getRed(pixels);
-               int Gr=ColorModel.getRGBdefault().getGreen(pixels);
-               int Bl=ColorModel.getRGBdefault().getBlue(pixels);
-               
-               R.setText(Integer.toString(Ro));
-               G.setText(Integer.toString(Gr));
-               B.setText(Integer.toString(Bl));
-               
-               System.out.println(Ro+" "+Gr+" "+Bl);
-               
-               X.setText(Integer.toString(evt.getX()));
-               Y.setText(Integer.toString(evt.getY()));
-               
-           }
-       } catch (InterruptedException ex) {
-           Logger.getLogger(SelectImage.class.getName()).log(Level.SEVERE, null, ex);
-       }*/
-     
-     
-        if (aux != null && aux == 0) {
-            Grabber obj = new Grabber();
-            try {
-                //obj.handlesinglepixel(doc2.getPath(), evt.getX(), evt.getY(), image.getIconWidth(), image.getIconHeight());
-                
-                System.out.println("R:" + red + ", G:" + green + ", B:" + blue);
-                System.out.println("X:" + evt.getX() + ", Y:" + evt.getY());
-                jTextField4.setText(red+"");
-                jTextField5.setText(green+"");
-                jTextField6.setText(blue+"");
+    }//GEN-LAST:event_XActionPerformed
 
-                jTextField7.setText(evt.getX()+"");
-                jTextField8.setText(evt.getY()+"");
-                 
+    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+        // TODO add your handling code here:
+         int aux;
+        String aux1;
+        Image imagen;
+        imagen = Toolkit.getDefaultToolkit().getImage(Busca.getSelectedFile().getPath());
 
-                Image imagen = Toolkit.getDefaultToolkit().getImage(doc2.getPath());
+        PixelGrabber Grabber = new PixelGrabber(imagen, evt.getX(), evt.getY(), Busca.getWidth(), Busca.getHeight(), false);
 
-                PixelGrabber grabber = new PixelGrabber(imagen, evt.getX(), evt.getY(), image.getIconWidth(), image.getIconHeight(), false);
+        try {
+            if (Grabber.grabPixels()) {
+                Object pixels = Grabber.getPixels();
+                int red = ColorModel.getRGBdefault().getRed(pixels);
+                int green = ColorModel.getRGBdefault().getGreen(pixels);
+                int blue = ColorModel.getRGBdefault().getBlue(pixels);
 
-                if (grabber.grabPixels()) {
-                    Object pixels = grabber.getPixels();
-                    int red = ColorModel.getRGBdefault().getRed(pixels);
-                    int green = ColorModel.getRGBdefault().getGreen(pixels);
-                    int blue = ColorModel.getRGBdefault().getBlue(pixels);
-                    label3.setText(red + "");
-                    label4.setText(green + "");
-                    label6.setText(blue + "");
+                X.setText(Integer.toString(evt.getX()));
+                Y.setText(Integer.toString(evt.getY()));
 
-                    label1.setText(evt.getX() + "");
-                    label2.setText(evt.getY() + "");
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(SelectImage.class.getName()).log(Level.SEVERE, null, ex);
+                R.setText(Integer.toString(red));
+                G.setText(Integer.toString(green));
+                B.setText(Integer.toString(blue));
+
+                //rsscalelabel.RSScaleLabel.setScaleLabel(jPanel1, Busca.getSelectedFile().toString());
             }
-
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SelectImage.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_formMouseMoved
+    }//GEN-LAST:event_jPanel1MouseMoved
 
     /**
      * @param args the command line arguments
@@ -356,14 +295,13 @@ public class SelectImage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try{
+                try {
                     new SelectImage().setVisible(true);
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());                    
-                }
-                catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(SelectImage.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
         });
     }
@@ -377,14 +315,13 @@ public class SelectImage extends javax.swing.JFrame {
     private javax.swing.JTextField X;
     private javax.swing.JTextField Y;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel label1;
-    private javax.swing.JLabel label2;
-    private javax.swing.JLabel label3;
-    private javax.swing.JLabel label4;
-    private javax.swing.JLabel label6;
     // End of variables declaration//GEN-END:variables
 }
