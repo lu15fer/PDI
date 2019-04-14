@@ -8,7 +8,6 @@ package panel;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.PixelGrabber;
 import java.util.logging.Level;
@@ -25,13 +24,13 @@ import manejoDatos.dameDatos;
  */
 public class Panel extends javax.swing.JFrame {
 
-    private JFileChooser Buscar = new JFileChooser();
-    private Toolkit t = Toolkit.getDefaultToolkit();
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private int anchosc = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-    private int largosc = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-    private FrameDatos FrNvo = new FrameDatos();
-    public BufferedImage bfImageglobal;
+    private final JFileChooser Buscar = new JFileChooser();
+    private final Toolkit t = Toolkit.getDefaultToolkit();
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private final int anchosc = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+    private final int largosc = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+    private final FrameDatos FrNvo = new FrameDatos();
+    public  Icon bfImageglobal;
     private int X, Y, R, G, B, an, lar;
     public dameDatos datos = new dameDatos();
 
@@ -178,14 +177,14 @@ public class Panel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelImg, javax.swing.GroupLayout.PREFERRED_SIZE, 665, Short.MAX_VALUE)
+                .addComponent(labelImg, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelImg, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+                .addComponent(labelImg, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -204,13 +203,15 @@ public class Panel extends javax.swing.JFrame {
         if (Buscar.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
             ImageIcon img = new ImageIcon(Buscar.getSelectedFile().getPath());
-            Icon icono = new ImageIcon(img.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_DEFAULT));
-            labelImg.setIcon(icono);
+            bfImageglobal = new ImageIcon(img.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+            labelImg.setIcon(bfImageglobal);
+            
+            System.out.println(labelImg.getIcon().getIconWidth()+" "+labelImg.getIcon().getIconHeight());
 
             this.repaint();
 
-            setAn(icono.getIconWidth());
-            setLar(icono.getIconHeight());
+            setAn(bfImageglobal.getIconWidth());
+            setLar(bfImageglobal.getIconHeight());
 
             datos.setAncho(an);
             datos.setLargo(lar);
@@ -235,10 +236,13 @@ public class Panel extends javax.swing.JFrame {
 
     private void labelImgMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelImgMouseMoved
         // TODO add your handling code here:      
-               Image imagen;
-        imagen = Toolkit.getDefaultToolkit().getImage(Buscar.getSelectedFile().getPath());
+               ImageIcon imagen=new ImageIcon(Buscar.getSelectedFile().getPath());
+               bfImageglobal= new ImageIcon(imagen.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+               ImageIcon nuevo= (ImageIcon) bfImageglobal;
+        //imagen = Toolkit.getDefaultToolkit().getImage(Buscar.getSelectedFile().getPath());
+     //   imagen=(Image) bfImageglobal;
 
-        PixelGrabber Grabber = new PixelGrabber(imagen, evt.getX(), evt.getY(), labelImg.getWidth(), labelImg.getHeight(), false);
+        PixelGrabber Grabber = new PixelGrabber(nuevo.getImage(), evt.getX(), evt.getY(), labelImg.getIcon().getIconWidth(), labelImg.getIcon().getIconHeight(), true);
 
         try {
             if (Grabber.grabPixels()) {
@@ -246,6 +250,9 @@ public class Panel extends javax.swing.JFrame {
                 int red = ColorModel.getRGBdefault().getRed(pixels);
                 int green = ColorModel.getRGBdefault().getGreen(pixels);
                 int blue = ColorModel.getRGBdefault().getBlue(pixels);
+                
+                System.out.println(Grabber.getWidth()+" "+ Grabber.getHeight());
+                
 
                 setX(evt.getX());
                 setY(evt.getY());
