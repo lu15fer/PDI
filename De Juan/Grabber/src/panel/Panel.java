@@ -238,7 +238,7 @@ public class Panel extends javax.swing.JFrame {
                Image imagen;
         imagen = Toolkit.getDefaultToolkit().getImage(Buscar.getSelectedFile().getPath());
 
-        PixelGrabber Grabber = new PixelGrabber(imagen, evt.getX(), evt.getY(), Buscar.getWidth(), Buscar.getHeight(), false);
+        PixelGrabber Grabber = new PixelGrabber(imagen, evt.getX(), evt.getY(), labelImg.getWidth(), labelImg.getHeight(), false);
 
         try {
             if (Grabber.grabPixels()) {
