@@ -409,17 +409,12 @@ public class Panel extends javax.swing.JFrame {
             }
             bfImageglobal = new ImageIcon(img.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
             labelImg.setIcon(bfImageglobal);
-            datos.setImagen((Image) bfImageglobal);
-
-            // System.out.println(labelImg.getIcon().getIconWidth()+" "+labelImg.getIcon().getIconHeight());
-            this.repaint();
-
             setAn(bfImageglobal.getIconWidth());
             setLar(bfImageglobal.getIconHeight());
 
             datos.setAncho(an);
             datos.setLargo(lar);
-
+            
             for (int i = 0; i <= imagenbuf.getWidth(); i++) {
                 for (int j = 0; j <= imagenbuf.getHeight(); j++) {
                     colorin = new Color(imagenbuf.getRGB(i, j));
@@ -432,7 +427,11 @@ public class Panel extends javax.swing.JFrame {
             datos.setRed(rini);
             datos.setGreen(gini);
             datos.setBlue(bini);
+            
+            datos.setImagen((Image) bfImageglobal);
 
+            this.repaint();
+            
         }
 
         FrNvo.setDatos(teVanDatos(datos));
