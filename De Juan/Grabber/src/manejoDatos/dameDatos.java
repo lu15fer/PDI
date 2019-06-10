@@ -12,10 +12,62 @@ import java.awt.event.MouseEvent;
  * @author zassu
  */
 public class dameDatos {
-    
-    private String Nombre;
-    private int ancho;
-    private int largo;
+
+    private String Nombre = "N/A";
+    private int ancho = 0;
+    private int largo = 0;
+
+    private int[] red = new int[256];
+    private int[] green = new int[256];
+    private int[] blue = new int[256];
+
+    public int[] getRed() {
+        return red;
+    }
+
+    public void setRed(int[] red) {
+        this.red = red;
+    }
+
+    public int getRed(int x) {
+        return red[x];
+    }
+
+    public void setRed(int x) {
+        this.red[x]++;
+    }
+
+    public int[] getGreen() {
+        return green;
+    }
+
+    public void setGreen(int[] green) {
+        this.green = green;
+    }
+
+    public int getGreen(int x) {
+        return green[x];
+    }
+
+    public void setGreen(int x) {
+        this.green[x] += 1;
+    }
+
+    public int[] getBlue() {
+        return blue;
+    }
+
+    public void setBlue(int[] blue) {
+        this.blue = blue;
+    }
+
+    public int getBlue(int x) {
+        return blue[x];
+    }
+
+    public void setBlue(int x) {
+        this.blue[x] += 1;
+    }
 
     public int getAncho() {
         return ancho;
@@ -32,12 +84,12 @@ public class dameDatos {
     public void setLargo(int largo) {
         this.largo = largo;
     }
-    private int coordX;
-    private int coodY;
-    private int pxgR;
-    private int pxgG;
-    private int pxgB;
-    
+    private int coordX = 0;
+    private int coodY = 0;
+    private int pxgR = 0;
+    private int pxgG = 0;
+    private int pxgB = 0;
+
     private java.awt.event.MouseEvent ev;
 
     public dameDatos(String Nombre, int coordX, int coodY, int pxgR, int pxgG, int an, int lar) {
@@ -46,15 +98,15 @@ public class dameDatos {
         this.coodY = coodY;
         this.pxgR = pxgR;
         this.pxgG = pxgG;
-        this.ancho=an;
-        this.largo=lar;
+        this.ancho = an;
+        this.largo = lar;
     }
-    
-    public dameDatos (){
-        
+
+    public dameDatos() {
+
     }
-    
-    public dameDatos(dameDatos dat){
+
+    public dameDatos(dameDatos dat) {
         this.setNombre(dat.getNombre());
         this.setAncho(dat.getAncho());
         this.setLargo(dat.getLargo());
@@ -64,16 +116,14 @@ public class dameDatos {
         this.setPxgG(dat.getPxgG());
         this.setPxgB(dat.getPxgB());
     }
-    
-    public void setEvt(java.awt.event.MouseEvent eb){
-        ev=eb;
+
+    public void setEvt(java.awt.event.MouseEvent eb) {
+        ev = eb;
     }
 
     public MouseEvent getEv() {
         return ev;
     }
-    
-    
 
     public String getNombre() {
         return Nombre;
@@ -122,8 +172,5 @@ public class dameDatos {
     public void setPxgB(int pxgB) {
         this.pxgB = pxgB;
     }
-    
-    
-   
-    
+
 }

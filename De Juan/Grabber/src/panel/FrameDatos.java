@@ -5,8 +5,18 @@
  */
 package panel;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import manejoDatos.dameDatos;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -56,6 +66,11 @@ public class FrameDatos extends javax.swing.JFrame {
         valGreenImg = new javax.swing.JTextField();
         showBlueImg = new javax.swing.JTextField();
         valBlueImg = new javax.swing.JTextField();
+        Paneles = new javax.swing.JPanel();
+        PanelHisto = new javax.swing.JPanel();
+        PanelRojo = new javax.swing.JPanel();
+        PanelVerde = new javax.swing.JPanel();
+        PanelAzul = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         actionMenuDatos = new javax.swing.JMenu();
         sizeOfImage1 = new javax.swing.JCheckBoxMenuItem();
@@ -149,6 +164,65 @@ public class FrameDatos extends javax.swing.JFrame {
         valBlueImg.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         valBlueImg.setEnabled(false);
 
+        javax.swing.GroupLayout PanelAzulLayout = new javax.swing.GroupLayout(PanelAzul);
+        PanelAzul.setLayout(PanelAzulLayout);
+        PanelAzulLayout.setHorizontalGroup(
+            PanelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 306, Short.MAX_VALUE)
+        );
+        PanelAzulLayout.setVerticalGroup(
+            PanelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 262, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout PanelVerdeLayout = new javax.swing.GroupLayout(PanelVerde);
+        PanelVerde.setLayout(PanelVerdeLayout);
+        PanelVerdeLayout.setHorizontalGroup(
+            PanelVerdeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelAzul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelVerdeLayout.setVerticalGroup(
+            PanelVerdeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelAzul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout PanelRojoLayout = new javax.swing.GroupLayout(PanelRojo);
+        PanelRojo.setLayout(PanelRojoLayout);
+        PanelRojoLayout.setHorizontalGroup(
+            PanelRojoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelVerde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelRojoLayout.setVerticalGroup(
+            PanelRojoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelVerde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout PanelHistoLayout = new javax.swing.GroupLayout(PanelHisto);
+        PanelHisto.setLayout(PanelHistoLayout);
+        PanelHistoLayout.setHorizontalGroup(
+            PanelHistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelRojo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelHistoLayout.setVerticalGroup(
+            PanelHistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PanelRojo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout PanelesLayout = new javax.swing.GroupLayout(Paneles);
+        Paneles.setLayout(PanelesLayout);
+        PanelesLayout.setHorizontalGroup(
+            PanelesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelesLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(PanelHisto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelesLayout.setVerticalGroup(
+            PanelesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelesLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(PanelHisto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         actionMenuDatos.setText("Acciones");
         actionMenuDatos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -198,12 +272,27 @@ public class FrameDatos extends javax.swing.JFrame {
         Histograma1.setText("Histograma");
 
         redHist1.setText("Rojo");
+        redHist1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                redHist1ItemStateChanged(evt);
+            }
+        });
         Histograma1.add(redHist1);
 
         greenHist1.setText("Verde");
+        greenHist1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                greenHist1ItemStateChanged(evt);
+            }
+        });
         Histograma1.add(greenHist1);
 
         blueHist1.setText("Azul");
+        blueHist1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                blueHist1ItemStateChanged(evt);
+            }
+        });
         Histograma1.add(blueHist1);
 
         actionMenuDatos.add(Histograma1);
@@ -224,29 +313,31 @@ public class FrameDatos extends javax.swing.JFrame {
                     .addComponent(anchoImg)
                     .addComponent(showName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(posXmosue)
-                            .addComponent(showXmouse, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(posYmouse)
-                            .addComponent(showYmouse, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(valRedImg)
-                            .addComponent(showRedImg, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(valGreenImg)
-                            .addComponent(showGreenImg, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(valBlueImg)
-                            .addComponent(showBlueImg, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)))
-                    .addComponent(imgName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(posXmosue)
+                                .addComponent(showXmouse, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(posYmouse)
+                                .addComponent(showYmouse, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(valRedImg)
+                                .addComponent(showRedImg, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(valGreenImg)
+                                .addComponent(showGreenImg, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(valBlueImg)
+                                .addComponent(showBlueImg, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)))
+                        .addComponent(imgName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                    .addComponent(Paneles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,8 +373,10 @@ public class FrameDatos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(valBlueImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(largoImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(largoImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Paneles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(237, 237, 237))
         );
 
         pack();
@@ -304,6 +397,7 @@ public class FrameDatos extends javax.swing.JFrame {
     private void sizeOfImage1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sizeOfImage1ItemStateChanged
         // TODO add your handling code here:
         if (sizeOfImage1.getState() == true) {
+
             sizeShow.enable(true);
             anchoImg.enable(true);
             largoImg.enable(true);
@@ -329,6 +423,47 @@ public class FrameDatos extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_nameOfImage1ItemStateChanged
+
+    private void blueHist1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_blueHist1ItemStateChanged
+        // TODO add your handling code here:
+        if (blueHist1.getState() == true) {
+            redHist1.setState(false);
+            greenHist1.setState(false);
+            this.GeneraHistogramas(1);
+        } else if (redHist1.getState() == false && greenHist1.getState() == false && blueHist1.getState() == false) {
+            Paneles.setVisible(false);
+            Paneles.enable(false);
+            Paneles.repaint();
+        }
+    }//GEN-LAST:event_blueHist1ItemStateChanged
+
+    private void greenHist1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_greenHist1ItemStateChanged
+        // TODO add your handling code here:
+
+        if (greenHist1.getState() == true) {
+            blueHist1.setState(false);
+            redHist1.setState(false);
+            this.GeneraHistogramas(2);
+        } else if (redHist1.getState() == false && greenHist1.getState() == false && blueHist1.getState() == false) {
+            Paneles.setVisible(false);
+            Paneles.enable(false);
+            Paneles.repaint();
+        }
+
+    }//GEN-LAST:event_greenHist1ItemStateChanged
+
+    private void redHist1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_redHist1ItemStateChanged
+        // TODO add your handling code here:
+        if (redHist1.getState() == true) {
+            blueHist1.setState(false);
+            greenHist1.setState(false);
+            this.GeneraHistogramas(3);
+        } else if (redHist1.getState() == false && greenHist1.getState() == false && blueHist1.getState() == false) {
+            Paneles.setVisible(false);
+            Paneles.enable(false);
+            Paneles.repaint();
+        }
+    }//GEN-LAST:event_redHist1ItemStateChanged
 
     public void mouseMoved(MouseEvent evento) {
         if (Coord1.getState() == true) {
@@ -415,6 +550,11 @@ public class FrameDatos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBoxMenuItem Coord1;
     private javax.swing.JMenu Histograma1;
+    private javax.swing.JPanel PanelAzul;
+    private javax.swing.JPanel PanelHisto;
+    private javax.swing.JPanel PanelRojo;
+    private javax.swing.JPanel PanelVerde;
+    private javax.swing.JPanel Paneles;
     private javax.swing.JMenu actionMenuDatos;
     private javax.swing.JTextField anchoImg;
     private javax.swing.JCheckBoxMenuItem blueGrabber1;
@@ -446,6 +586,57 @@ public class FrameDatos extends javax.swing.JFrame {
     public void tomaDatos(dameDatos data) {
 
         datos = data;
+
+    }
+
+    public void crearHistograma3D(int[] histograma, JPanel panelHistograma, Color colorBarras, String Nombre) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        String serie = "Pixeles";
+        for (int i = 0; i < histograma.length; i++) {
+            dataset.addValue(histograma[i], serie, "" + i);
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart3D(Nombre, null, null, dataset, PlotOrientation.VERTICAL, true, true, false);
+
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, colorBarras);
+        chart.setAntiAlias(true);
+        chart.setBackgroundPaint(new Color(214, 217, 223));
+        panelHistograma.removeAll();
+        panelHistograma.repaint();
+        panelHistograma.setLayout(new java.awt.BorderLayout());
+        panelHistograma.add(new ChartPanel(chart));
+        panelHistograma.validate();
+    }
+
+    public void GeneraHistogramas(int dec) {
+        switch (dec) {
+            case 1:
+                int[] histogramaBlue = new int[256];
+                System.arraycopy(datos.getBlue(), 0, histogramaBlue, 0, datos.getBlue().length);
+                this.crearHistograma3D(histogramaBlue, Paneles, Color.BLUE, "Azul");
+                Paneles.repaint();
+                Paneles.setVisible(true);
+                Paneles.enable(true);
+                break;
+            case 2:
+                int[] histogramaGreen = new int[256];
+                System.arraycopy(datos.getGreen(), 0, histogramaGreen, 0, datos.getGreen().length);
+                this.crearHistograma3D(histogramaGreen, Paneles, Color.GREEN, "Verde");
+                Paneles.repaint();
+                Paneles.setVisible(true);
+                Paneles.enable(true);
+                break;
+            case 3:
+                int[] histogramaRed = new int[256];
+                System.arraycopy(datos.getRed(), 0, histogramaRed, 0, datos.getRed().length);
+                this.crearHistograma3D(histogramaRed, Paneles, Color.RED, "Rojo");
+                Paneles.repaint();
+                Paneles.setVisible(true);
+                Paneles.enable(true);
+                break;
+        }
 
     }
 

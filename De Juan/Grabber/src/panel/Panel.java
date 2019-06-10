@@ -5,13 +5,18 @@
  */
 package panel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.PixelGrabber;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -30,9 +35,13 @@ public class Panel extends javax.swing.JFrame {
     private final int anchosc = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int largosc = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
     private final FrameDatos FrNvo = new FrameDatos();
-    public  Icon bfImageglobal;
+    public Icon bfImageglobal;
     private int X, Y, R, G, B, an, lar;
     public dameDatos datos = new dameDatos();
+    private final int[] rini = new int[256];
+    private int[] gini = new int[256];
+    private int[] bini = new int[256];
+    private Color colorin;
 
     public int getAn() {
         return an;
@@ -200,14 +209,29 @@ public class Panel extends javax.swing.JFrame {
                 "jpg", "jpeg", "jpe", "jfif", "png");
         Buscar.setFileFilter(ext);
 
+        for (int x = 0; x < 256; x++) {
+            rini[x] = 0;
+            gini[x] = 0;
+            bini[x] = 0;
+        }
+
+        datos.setRed(rini);
+        datos.setGreen(gini);
+        datos.setBlue(bini);
+
         if (Buscar.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
             ImageIcon img = new ImageIcon(Buscar.getSelectedFile().getPath());
+            BufferedImage imagenbuf = null;
+            try {
+                imagenbuf = ImageIO.read(new File(Buscar.getSelectedFile().getPath()));
+            } catch (IOException ex) {
+                Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+            }
             bfImageglobal = new ImageIcon(img.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
             labelImg.setIcon(bfImageglobal);
-            
-            System.out.println(labelImg.getIcon().getIconWidth()+" "+labelImg.getIcon().getIconHeight());
 
+            // System.out.println(labelImg.getIcon().getIconWidth()+" "+labelImg.getIcon().getIconHeight());
             this.repaint();
 
             setAn(bfImageglobal.getIconWidth());
@@ -216,9 +240,23 @@ public class Panel extends javax.swing.JFrame {
             datos.setAncho(an);
             datos.setLargo(lar);
 
+            for (int i = 0; i <= imagenbuf.getWidth(); i++) {
+                for (int j = 0; j <= imagenbuf.getHeight(); j++) {
+                    colorin = new Color(imagenbuf.getRGB(i, j));
+                    rini[colorin.getRed()] += 1;
+                    gini[colorin.getGreen()] += 1;
+                    bini[colorin.getBlue()] += 1;
+                }
+            }
+
+            datos.setRed(rini);
+            datos.setGreen(gini);
+            datos.setBlue(bini);
+
         }
+        
         FrNvo.setDatos(teVanDatos(datos));
-                
+
     }//GEN-LAST:event_CargarActionPerformed
 
     private void datosWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datosWindowActionPerformed
@@ -236,11 +274,11 @@ public class Panel extends javax.swing.JFrame {
 
     private void labelImgMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelImgMouseMoved
         // TODO add your handling code here:      
-               ImageIcon imagen=new ImageIcon(Buscar.getSelectedFile().getPath());
-               bfImageglobal= new ImageIcon(imagen.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
-               ImageIcon nuevo= (ImageIcon) bfImageglobal;
-        //imagen = Toolkit.getDefaultToolkit().getImage(Buscar.getSelectedFile().getPath());
-     //   imagen=(Image) bfImageglobal;
+        ImageIcon imagen = new ImageIcon(Buscar.getSelectedFile().getPath());
+        bfImageglobal = new ImageIcon(imagen.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+        ImageIcon nuevo = (ImageIcon) bfImageglobal;
+
+        FrNvo.getDatos().setRed(rini);
 
         PixelGrabber Grabber = new PixelGrabber(nuevo.getImage(), evt.getX(), evt.getY(), labelImg.getIcon().getIconWidth(), labelImg.getIcon().getIconHeight(), true);
 
@@ -250,17 +288,13 @@ public class Panel extends javax.swing.JFrame {
                 int red = ColorModel.getRGBdefault().getRed(pixels);
                 int green = ColorModel.getRGBdefault().getGreen(pixels);
                 int blue = ColorModel.getRGBdefault().getBlue(pixels);
-                
-                System.out.println(Grabber.getWidth()+" "+ Grabber.getHeight());
-                
 
+                //   System.out.println(Grabber.getWidth()+" "+ Grabber.getHeight());
                 setX(evt.getX());
                 setY(evt.getY());
                 setR(red);
                 setG(green);
                 setB(blue);
-                
-                
 
                 datos.setCoodY(evt.getY());
                 datos.setCoordX(evt.getX());
@@ -271,12 +305,12 @@ public class Panel extends javax.swing.JFrame {
                 teVanDatos(datos);
 
                 FrNvo.setDatos(teVanDatos(datos));
-                
+
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
         }
-                FrNvo.getDatos().setEvt(evt);
+        FrNvo.getDatos().setEvt(evt);
         FrNvo.mouseMoved(FrNvo.getDatos().getEv());
     }//GEN-LAST:event_labelImgMouseMoved
 
@@ -339,4 +373,8 @@ public class Panel extends javax.swing.JFrame {
 
         return dat;
     }
+
+    
+    /*public void countColorHist(int x, int y) {
+     */
 }

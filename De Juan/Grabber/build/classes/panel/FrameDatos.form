@@ -73,16 +73,25 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Rojo"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="redHist1ItemStateChanged"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="greenHist1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Verde"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="greenHist1ItemStateChanged"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="blueHist1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Azul"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="blueHist1ItemStateChanged"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -131,7 +140,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="largoImg" alignment="1" max="32767" attributes="0"/>
@@ -139,37 +148,40 @@
                   <Component id="anchoImg" alignment="1" max="32767" attributes="0"/>
                   <Component id="showName" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="posXmosue" alignment="1" max="32767" attributes="0"/>
-                          <Component id="showXmouse" alignment="1" pref="56" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="posXmosue" alignment="1" max="32767" attributes="0"/>
+                              <Component id="showXmouse" alignment="1" pref="56" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="posYmouse" alignment="1" max="32767" attributes="0"/>
+                              <Component id="showYmouse" alignment="1" pref="56" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="valRedImg" alignment="1" max="32767" attributes="0"/>
+                              <Component id="showRedImg" alignment="1" pref="56" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="valGreenImg" alignment="1" max="32767" attributes="0"/>
+                              <Component id="showGreenImg" alignment="1" pref="56" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="valBlueImg" alignment="1" max="32767" attributes="0"/>
+                              <Component id="showBlueImg" alignment="1" pref="56" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="posYmouse" alignment="1" max="32767" attributes="0"/>
-                          <Component id="showYmouse" alignment="1" pref="56" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="valRedImg" alignment="1" max="32767" attributes="0"/>
-                          <Component id="showRedImg" alignment="1" pref="56" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="valGreenImg" alignment="1" max="32767" attributes="0"/>
-                          <Component id="showGreenImg" alignment="1" pref="56" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="valBlueImg" alignment="1" max="32767" attributes="0"/>
-                          <Component id="showBlueImg" alignment="1" pref="56" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="imgName" alignment="0" pref="304" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="imgName" alignment="0" pref="304" max="32767" attributes="0"/>
+                  <Component id="Paneles" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -181,7 +193,7 @@
                   <Component id="showName" alignment="3" max="-2" attributes="0"/>
                   <Component id="imgName" alignment="3" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="sizeShow" max="-2" attributes="0"/>
@@ -215,9 +227,12 @@
                       <Component id="valBlueImg" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="largoImg" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="170" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="largoImg" min="-2" max="-2" attributes="0"/>
+                  <Component id="Paneles" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -336,5 +351,94 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
+    <Container class="javax.swing.JPanel" name="Paneles">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                  <Component id="PanelHisto" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                  <Component id="PanelHisto" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="PanelHisto">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="PanelRojo" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="PanelRojo" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="PanelRojo">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="PanelVerde" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="PanelVerde" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="PanelVerde">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="PanelAzul" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="PanelAzul" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JPanel" name="PanelAzul">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="306" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="262" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                    </Container>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

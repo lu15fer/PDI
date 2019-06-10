@@ -1,0 +1,20 @@
+base de datos con mongo lab
+formatos:
+BDD no relacionales:
+Es más flexible horizontal y verticalmente
+XML 
+JSON
+
+
+mlab:
+servicio de DBaaS (Data Base Service) Servicio de bdd en la nube
+
+-Da espacio grauito (sandbox 500MB)
+
+Desarrollo de API Rest
+
+Link para consumir:
+https://aragonapi.herokuapp.com/api/users/
+
+
+
