@@ -5,10 +5,23 @@
  */
 package panel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.MemoryImageSource;
+import java.awt.image.PixelGrabber;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import manejoDatos.dameDatos;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -27,6 +40,13 @@ public class FrameDatos extends javax.swing.JFrame {
     /**
      * Creates new form FrameDatos
      */
+    
+    BufferedImage bimg;    
+    public Image tempImage;
+    private int brilloNum=0;
+    private int negativoNum=0;
+    
+    
     private dameDatos datos = new dameDatos();
 
     public dameDatos getDatos() {
@@ -639,5 +659,7 @@ public class FrameDatos extends javax.swing.JFrame {
         }
 
     }
+    
+
 
 }

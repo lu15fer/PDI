@@ -5,12 +5,16 @@
  */
 package panel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +24,12 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import manejoDatos.dameDatos;
 
@@ -42,6 +52,11 @@ public class Panel extends javax.swing.JFrame {
     private int[] gini = new int[256];
     private int[] bini = new int[256];
     private Color colorin;
+
+    BufferedImage bimg;
+    public Image tempImage;
+    private int brilloNum = 0;
+    private int negativoNum = 0;
 
     public int getAn() {
         return an;
@@ -123,6 +138,8 @@ public class Panel extends javax.swing.JFrame {
         Cargar = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
         Editar = new javax.swing.JMenu();
+        Brillo = new javax.swing.JMenuItem();
+        Negativo = new javax.swing.JMenuItem();
         Ver = new javax.swing.JMenu();
         datosWindow = new javax.swing.JMenuItem();
 
@@ -163,6 +180,23 @@ public class Panel extends javax.swing.JFrame {
         barraMenu.add(Archivo);
 
         Editar.setText("Editar");
+
+        Brillo.setText("Brillo");
+        Brillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BrilloActionPerformed(evt);
+            }
+        });
+        Editar.add(Brillo);
+
+        Negativo.setText("Negativo");
+        Negativo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NegativoActionPerformed(evt);
+            }
+        });
+        Editar.add(Negativo);
+
         barraMenu.add(Editar);
 
         Ver.setText("Ver");
@@ -184,9 +218,9 @@ public class Panel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelImg, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelImg, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -222,14 +256,17 @@ public class Panel extends javax.swing.JFrame {
         if (Buscar.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
             ImageIcon img = new ImageIcon(Buscar.getSelectedFile().getPath());
+
             BufferedImage imagenbuf = null;
             try {
                 imagenbuf = ImageIO.read(new File(Buscar.getSelectedFile().getPath()));
+                bimg = ImageIO.read(new File(Buscar.getSelectedFile().getPath()));
             } catch (IOException ex) {
                 Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
             }
             bfImageglobal = new ImageIcon(img.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
             labelImg.setIcon(bfImageglobal);
+            datos.setImagen((Image) bfImageglobal);
 
             // System.out.println(labelImg.getIcon().getIconWidth()+" "+labelImg.getIcon().getIconHeight());
             this.repaint();
@@ -254,7 +291,7 @@ public class Panel extends javax.swing.JFrame {
             datos.setBlue(bini);
 
         }
-        
+
         FrNvo.setDatos(teVanDatos(datos));
 
     }//GEN-LAST:event_CargarActionPerformed
@@ -314,6 +351,25 @@ public class Panel extends javax.swing.JFrame {
         FrNvo.mouseMoved(FrNvo.getDatos().getEv());
     }//GEN-LAST:event_labelImgMouseMoved
 
+    private void BrilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrilloActionPerformed
+        try {
+            // TODO add your handling code here:
+            brillo();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_BrilloActionPerformed
+
+    private void NegativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NegativoActionPerformed
+        try {
+            // TODO add your handling code here:
+            negativo();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_NegativoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -351,8 +407,10 @@ public class Panel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Archivo;
+    private javax.swing.JMenuItem Brillo;
     private javax.swing.JMenuItem Cargar;
     private javax.swing.JMenu Editar;
+    private javax.swing.JMenuItem Negativo;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenu Ver;
     private javax.swing.JMenuBar barraMenu;
@@ -374,7 +432,198 @@ public class Panel extends javax.swing.JFrame {
         return dat;
     }
 
-    
+    private void brillo() throws InterruptedException {
+        JPanel panel = new JPanel();
+        JOptionPane jOptionPane = new JOptionPane((LayoutManager) new FlowLayout());
+        JSlider brillo = new JSlider();
+        brillo.setMaximum(100);
+        brillo.setMinimum(0);
+        brillo.setPaintLabels(true);
+        brillo.setPaintTicks(true);
+        brillo.setMajorTickSpacing(10);
+        brillo.setValue(0);
+        JLabel label = new JLabel("Brillo:    0%");
+        panel.add(label, BorderLayout.NORTH);
+        panel.add(brillo, BorderLayout.SOUTH);
+        brillo.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                label.setText("Brillo: " + brillo.getValue() + "%\n");
+                brilloNum = (int) brillo.getValue();
+                int escala = (int) (brilloNum * 255 / 100);
+
+                try {
+                    cambiarBrillo(escala);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FrameDatos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        });
+
+        //jOptionPane.showMessageDialog(null, panel,"Selector de brillo",JOptionPane.WARNING_MESSAGE);
+        int res = jOptionPane.showConfirmDialog(null, panel, "Selector de brillo", JOptionPane.WARNING_MESSAGE);
+        if (res == 0) {
+            int escala = (int) (brilloNum * 255 / 100);
+            cambiarBrillo(escala, true);
+        } else {
+            brilloNum = 0;
+            tempImage = null;
+            repaint();
+        }
+    }
+
+    private void cambiarBrillo(int intencidad) throws InterruptedException {
+        int p, rojo, verde, azul;
+        ImageIcon nuevo = (ImageIcon) bfImageglobal;
+        int pixeles[] = new int[(int) bimg.getHeight() * bimg.getWidth()];
+        PixelGrabber grabber = new PixelGrabber(nuevo.getImage(), 0, 0, labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth());
+        grabber.grabPixels();
+        for (int i = 0; i < pixeles.length; i++) {
+            p = pixeles[i];
+            rojo = (0xff & (p >> 16)) + intencidad;
+            verde = (0xff & (p >> 8)) + intencidad;
+            azul = (0xff & p) + intencidad;
+            if (rojo > 255) {
+                rojo = 255;
+            }
+            if (verde > 255) {
+                verde = 255;
+            }
+            if (azul > 255) {
+                azul = 255;
+            }
+            pixeles[i] = (0xff000000 | rojo << 16 | verde << 8 | azul);
+        }
+        tempImage = createImage(new MemoryImageSource(labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth()));
+        ImageIcon aiuda = new ImageIcon(tempImage.getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+        labelImg.setIcon(aiuda);
+        this.repaint();
+    }
+
+    private void cambiarBrillo(int intencidad, boolean b) throws InterruptedException {
+        int p, rojo, verde, azul;
+        ImageIcon nuevo = (ImageIcon) bfImageglobal;
+        int pixeles[] = new int[(int) bimg.getHeight() * bimg.getWidth()];
+        PixelGrabber grabber = new PixelGrabber(nuevo.getImage(), 0, 0, labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth());
+        grabber.grabPixels();
+        for (int i = 0; i < pixeles.length; i++) {
+            p = pixeles[i];
+            rojo = (0xff & (p >> 16)) + intencidad;
+            verde = (0xff & (p >> 8)) + intencidad;
+            azul = (0xff & p) + intencidad;
+            if (rojo > 255) {
+                rojo = 255;
+            }
+            if (verde > 255) {
+                verde = 255;
+            }
+            if (azul > 255) {
+                azul = 255;
+            }
+            pixeles[i] = (0xff000000 | rojo << 16 | verde << 8 | azul);
+        }
+        datos.setImagen(createImage(new MemoryImageSource(labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth())));
+        ImageIcon aiuda = new ImageIcon(datos.getImagen().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+        labelImg.setIcon(aiuda);
+        this.repaint();
+    }
+
+    private void negativo() throws InterruptedException {
+        JPanel panel = new JPanel();
+        JOptionPane jOptionPane = new JOptionPane((LayoutManager) new FlowLayout());
+        JSlider negativo = new JSlider();
+        negativo.setMaximum(100);
+        negativo.setMinimum(0);
+        negativo.setPaintLabels(true);
+        negativo.setPaintTicks(true);
+        negativo.setMajorTickSpacing(10);
+        negativo.setValue(0);
+        JLabel label = new JLabel("Negativo:    0%");
+        panel.add(label, BorderLayout.NORTH);
+        panel.add(negativo, BorderLayout.SOUTH);
+        negativo.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                label.setText("Negativo: " + negativo.getValue() + "%\n");
+                negativoNum = (int) negativo.getValue();
+                int escala = (int) (negativoNum * 255 / 100);
+                try {
+                    cambiarNegativo(escala);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FrameDatos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        //jOptionPane.showMessageDialog(null, panel,"Selector de negativo",JOptionPane.WARNING_MESSAGE);
+        int res = jOptionPane.showConfirmDialog(null, panel, "Selector de negativo", JOptionPane.WARNING_MESSAGE);
+        if (res == 0) {
+            int escala = (int) (negativoNum * 255 / 100);
+            cambiarNegativo(escala, true);
+        } else {
+            negativoNum = 0;
+            tempImage = null;
+            repaint();
+        }
+    }
+
+    private void cambiarNegativo(int intencidad) throws InterruptedException {
+        int p, rojo, verde, azul;
+        ImageIcon nuevo = (ImageIcon) bfImageglobal;
+        int pixeles[] = new int[(int) bimg.getHeight() * bimg.getWidth()];
+        PixelGrabber grabber = new PixelGrabber(nuevo.getImage(), 0, 0, labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth());
+        grabber.grabPixels();
+        for (int i = 0; i < pixeles.length; i++) {
+            p = pixeles[i];
+            rojo = -(0xff & (p >> 16)) + intencidad;
+            verde = -(0xff & (p >> 8)) + intencidad;
+            azul = -(0xff & p) + intencidad;
+            if (rojo < 0) {
+                rojo = 0;
+            }
+            if (verde < 0) {
+                verde = 0;
+            }
+            if (azul < 0) {
+                azul = 0;
+            }
+            pixeles[i] = (0xff000000 | rojo << 16 | verde << 8 | azul);
+        }
+        tempImage = createImage(new MemoryImageSource(labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth()));
+        ImageIcon aiuda = new ImageIcon(tempImage.getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+        labelImg.setIcon(aiuda);
+        this.repaint();
+    }
+
+    private void cambiarNegativo(int intencidad, boolean b) throws InterruptedException {
+        int p, rojo, verde, azul;
+        ImageIcon nuevo = (ImageIcon) bfImageglobal;
+        int pixeles[] = new int[(int) bimg.getHeight() * bimg.getWidth()];
+        PixelGrabber grabber = new PixelGrabber(nuevo.getImage(), 0, 0, labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth());
+        grabber.grabPixels();
+        for (int i = 0; i < pixeles.length; i++) {
+            p = pixeles[i];
+            rojo = -(0xff & (p >> 16)) + intencidad;
+            verde = -(0xff & (p >> 8)) + intencidad;
+            azul = -(0xff & p) + intencidad;
+            if (rojo < 0) {
+                rojo = 0;
+            }
+            if (verde < 0) {
+                verde = 0;
+            }
+            if (azul < 0) {
+                azul = 0;
+            }
+            pixeles[i] = (0xff000000 | rojo << 16 | verde << 8 | azul);
+        }
+        datos.setImagen(createImage(new MemoryImageSource(labelImg.getWidth(), labelImg.getHeight(), pixeles, 0, labelImg.getWidth())));
+        ImageIcon aiuda = new ImageIcon(datos.getImagen().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+        labelImg.setIcon(aiuda);
+        this.repaint();
+    }
+
     /*public void countColorHist(int x, int y) {
      */
 }

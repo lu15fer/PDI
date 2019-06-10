@@ -5,6 +5,7 @@
  */
 package manejoDatos;
 
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 
 /**
@@ -16,6 +17,18 @@ public class dameDatos {
     private String Nombre = "N/A";
     private int ancho = 0;
     private int largo = 0;
+    
+    private Image imagen;
+
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
+    }
+    
+    
 
     private int[] red = new int[256];
     private int[] green = new int[256];
