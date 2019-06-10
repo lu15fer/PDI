@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
@@ -52,11 +53,42 @@ public class Panel extends javax.swing.JFrame {
     private int[] gini = new int[256];
     private int[] bini = new int[256];
     private Color colorin;
+    public boolean imgGuardada=false;
 
     BufferedImage bimg;
     public Image tempImage;
     private int brilloNum = 0;
     private int negativoNum = 0;
+
+    private String rutaGuardar;
+
+    public String getRutaGuardar() {
+        return rutaGuardar;
+    }
+
+    public void setRutaGuardar(String rutaGuardar) {
+        this.rutaGuardar = rutaGuardar;
+    }
+
+    private String ext;
+
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
+    }
+
+    private String rutaImagen = "";
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
 
     public int getAn() {
         return an;
@@ -136,6 +168,8 @@ public class Panel extends javax.swing.JFrame {
         barraMenu = new javax.swing.JMenuBar();
         Archivo = new javax.swing.JMenu();
         Cargar = new javax.swing.JMenuItem();
+        Guardar = new javax.swing.JMenuItem();
+        GuardaComo = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
         Editar = new javax.swing.JMenu();
         Brillo = new javax.swing.JMenuItem();
@@ -168,6 +202,22 @@ public class Panel extends javax.swing.JFrame {
             }
         });
         Archivo.add(Cargar);
+
+        Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
+        Archivo.add(Guardar);
+
+        GuardaComo.setText("Guardar como...");
+        GuardaComo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardaComoActionPerformed(evt);
+            }
+        });
+        Archivo.add(GuardaComo);
 
         Salir.setText("Salir");
         Salir.addActionListener(new java.awt.event.ActionListener() {
@@ -370,6 +420,24 @@ public class Panel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_NegativoActionPerformed
 
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        try {
+            // TODO add your handling code here:
+            saveImage();
+        } catch (IOException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_GuardarActionPerformed
+
+    private void GuardaComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardaComoActionPerformed
+        try {
+            // TODO add your handling code here:
+            saveImageAs();
+        } catch (IOException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_GuardaComoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -410,6 +478,8 @@ public class Panel extends javax.swing.JFrame {
     private javax.swing.JMenuItem Brillo;
     private javax.swing.JMenuItem Cargar;
     private javax.swing.JMenu Editar;
+    private javax.swing.JMenuItem GuardaComo;
+    private javax.swing.JMenuItem Guardar;
     private javax.swing.JMenuItem Negativo;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenu Ver;
@@ -624,6 +694,80 @@ public class Panel extends javax.swing.JFrame {
         this.repaint();
     }
 
-    /*public void countColorHist(int x, int y) {
-     */
+    public void saveImageAs() throws IOException {
+        if (tempImage != null) {
+            datos.setImagen(tempImage);
+            tempImage = null;
+        }
+        JFileChooser jfc = new JFileChooser("Guardar Cómo");
+        int res = jfc.showSaveDialog(this);
+        getExtensionFile(Buscar.getSelectedFile().getName());
+        if (res == 0) {
+            setRutaGuardar(cambiarTipoRuta(jfc.getSelectedFile().getPath() + "." + this.getExt()));
+            File newFile = new File(rutaGuardar);
+            ImageIO.write(convertToBufferedImage(datos.getImagen()), ext, newFile);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se guardo imagen", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        imgGuardada = true;
+    }
+
+    public void saveImage() throws IOException {
+        if (tempImage != null) {
+            datos.setImagen(tempImage);
+            tempImage = null;
+        }
+        if (imgGuardada == false) {
+            saveImageAs();
+        } else {
+            File newFile = new File(rutaGuardar);
+            ImageIO.write(convertToBufferedImage(datos.getImagen()), ext, newFile);
+        }
+    }
+
+    public String getExtensionFile(String name) {
+        String extension = "";
+        char[] cs = name.toCharArray();
+        int cont = 0;
+        for (int i = 0; i < cs.length; i++) {
+            if (cs[i] == '.') {
+                cont++;
+            }
+        }
+
+        int cont2 = 0;
+        for (int i = 0; i < cs.length; i++) {
+            if (cont2 == cont) {
+                extension += cs[i];
+            }
+            if (cs[i] == '.') {
+                cont2++;
+            }
+        }
+        ext = extension;
+        return extension;
+    }
+
+    public String cambiarTipoRuta(String ruta) {
+        char[] rutaAr = ruta.toCharArray();
+        String rutaCambio = "";
+        for (int i = 0; i < rutaAr.length; i++) {
+            if (rutaAr[i] == '\\') {
+                rutaAr[i] = '/';
+            }
+            rutaCambio += rutaAr[i];
+        }
+        setRutaImagen(rutaCambio);
+        return rutaCambio;
+    }
+
+    public BufferedImage convertToBufferedImage(Image image) {
+        BufferedImage newImage = new BufferedImage(
+                image.getWidth(null), image.getHeight(null),
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImage.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return newImage;
+    }
 }
