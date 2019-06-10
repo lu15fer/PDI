@@ -13,6 +13,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
@@ -22,16 +24,20 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import manejoDatos.Barra2;
 import manejoDatos.dameDatos;
 
 /**
@@ -53,7 +59,7 @@ public class Panel extends javax.swing.JFrame {
     private int[] gini = new int[256];
     private int[] bini = new int[256];
     private Color colorin;
-    public boolean imgGuardada=false;
+    public boolean imgGuardada = false;
 
     BufferedImage bimg;
     public Image tempImage;
@@ -89,6 +95,34 @@ public class Panel extends javax.swing.JFrame {
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
+
+    private int[][] matriz3x3, matriz5x5, matriz7x7;
+
+    public int[][] getMatriz3x3() {
+        return matriz3x3;
+    }
+
+    public void setMatriz3x3(int[][] matriz3x3) {
+        this.matriz3x3 = matriz3x3;
+    }
+
+    public int[][] getMatriz5x5() {
+        return matriz5x5;
+    }
+
+    public void setMatriz5x5(int[][] matriz5x5) {
+        this.matriz5x5 = matriz5x5;
+    }
+
+    public int[][] getMatriz7x7() {
+        return matriz7x7;
+    }
+
+    public void setMatriz7x7(int[][] matriz7x7) {
+        this.matriz7x7 = matriz7x7;
+    }
+
+    Barra2 frame;
 
     public int getAn() {
         return an;
@@ -174,6 +208,13 @@ public class Panel extends javax.swing.JFrame {
         Editar = new javax.swing.JMenu();
         Brillo = new javax.swing.JMenuItem();
         Negativo = new javax.swing.JMenuItem();
+        menuMatrices = new javax.swing.JMenu();
+        menuMat3x3 = new javax.swing.JMenuItem();
+        menuMat5x5 = new javax.swing.JMenuItem();
+        menuMat7x7 = new javax.swing.JMenuItem();
+        menuIng3x3 = new javax.swing.JMenuItem();
+        menuIng5x5 = new javax.swing.JMenuItem();
+        menuIng7x7 = new javax.swing.JMenuItem();
         Ver = new javax.swing.JMenu();
         datosWindow = new javax.swing.JMenuItem();
 
@@ -246,6 +287,58 @@ public class Panel extends javax.swing.JFrame {
             }
         });
         Editar.add(Negativo);
+
+        menuMatrices.setText("Matriz");
+
+        menuMat3x3.setText("Matriz 3x3");
+        menuMat3x3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMat3x3ActionPerformed(evt);
+            }
+        });
+        menuMatrices.add(menuMat3x3);
+
+        menuMat5x5.setText("Matriz 5x5");
+        menuMat5x5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMat5x5ActionPerformed(evt);
+            }
+        });
+        menuMatrices.add(menuMat5x5);
+
+        menuMat7x7.setText("Matriz 7x7");
+        menuMat7x7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMat7x7ActionPerformed(evt);
+            }
+        });
+        menuMatrices.add(menuMat7x7);
+
+        menuIng3x3.setText("Ingresa Matriz 3 x 3");
+        menuIng3x3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuIng3x3ActionPerformed(evt);
+            }
+        });
+        menuMatrices.add(menuIng3x3);
+
+        menuIng5x5.setText("Ingresa Matriz 5 x 5");
+        menuIng5x5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuIng5x5ActionPerformed(evt);
+            }
+        });
+        menuMatrices.add(menuIng5x5);
+
+        menuIng7x7.setText("Ingresa Matriz 7 x 7");
+        menuIng7x7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuIng7x7ActionPerformed(evt);
+            }
+        });
+        menuMatrices.add(menuIng7x7);
+
+        Editar.add(menuMatrices);
 
         barraMenu.add(Editar);
 
@@ -438,6 +531,36 @@ public class Panel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GuardaComoActionPerformed
 
+    private void menuMat3x3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMat3x3ActionPerformed
+        // TODO add your handling code here:
+        aplicarMatriz();
+    }//GEN-LAST:event_menuMat3x3ActionPerformed
+
+    private void menuMat5x5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMat5x5ActionPerformed
+         // TODO add your handling code here:
+         aplicarMatriz5x5();
+    }//GEN-LAST:event_menuMat5x5ActionPerformed
+
+    private void menuMat7x7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMat7x7ActionPerformed
+         // TODO add your handling code here:
+         aplicarMatriz7x7();
+    }//GEN-LAST:event_menuMat7x7ActionPerformed
+
+    private void menuIng5x5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIng5x5ActionPerformed
+        // TODO add your handling code here:
+        aplicarMatriz(19);
+    }//GEN-LAST:event_menuIng5x5ActionPerformed
+
+    private void menuIng3x3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIng3x3ActionPerformed
+        // TODO add your handling code here:
+        aplicarMatriz(18);
+    }//GEN-LAST:event_menuIng3x3ActionPerformed
+
+    private void menuIng7x7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIng7x7ActionPerformed
+        // TODO add your handling code here:
+        aplicarMatriz(20);
+    }//GEN-LAST:event_menuIng7x7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -486,6 +609,13 @@ public class Panel extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem datosWindow;
     private javax.swing.JLabel labelImg;
+    private javax.swing.JMenuItem menuIng3x3;
+    private javax.swing.JMenuItem menuIng5x5;
+    private javax.swing.JMenuItem menuIng7x7;
+    private javax.swing.JMenuItem menuMat3x3;
+    private javax.swing.JMenuItem menuMat5x5;
+    private javax.swing.JMenuItem menuMat7x7;
+    private javax.swing.JMenu menuMatrices;
     // End of variables declaration//GEN-END:variables
 
     public dameDatos teVanDatos(dameDatos dat) {
@@ -769,5 +899,1280 @@ public class Panel extends javax.swing.JFrame {
         g.drawImage(image, 0, 0, null);
         g.dispose();
         return newImage;
+    }
+
+    public boolean getMatrizPer3x3() {
+        boolean b = false;
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        GroupLayout layout1 = new GroupLayout(panel1);
+        GroupLayout layout2 = new GroupLayout(panel2);
+        GroupLayout layout3 = new GroupLayout(panel3);
+
+        JTextField f1c1 = new JTextField(null, "", 5);
+        JTextField f1c2 = new JTextField(null, "", 5);
+        JTextField f1c3 = new JTextField(null, "", 5);
+
+        layout1.setHorizontalGroup(
+                layout1.createSequentialGroup()
+                        .addComponent(f1c1)
+                        .addComponent(f1c2)
+                        .addComponent(f1c3)
+        );
+
+        JTextField f2c1 = new JTextField(null, "", 5);
+        JTextField f2c2 = new JTextField(null, "", 5);
+        JTextField f2c3 = new JTextField(null, "", 5);
+
+        layout2.setHorizontalGroup(
+                layout2.createSequentialGroup()
+                        .addComponent(f2c1)
+                        .addComponent(f2c2)
+                        .addComponent(f2c3)
+        );
+
+        JTextField f3c1 = new JTextField(null, "", 5);
+        JTextField f3c2 = new JTextField(null, "", 5);
+        JTextField f3c3 = new JTextField(null, "", 5);
+
+        layout3.setHorizontalGroup(
+                layout3.createSequentialGroup()
+                        .addComponent(f3c1)
+                        .addComponent(f3c2)
+                        .addComponent(f3c3)
+        );
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel1, "Ingresar Filtro 3x3, fila 1", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel2, "Ingresar Filtro 3x3, fila 2", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel3, "Ingresar Filtro 3x3, fila 3", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        try {
+            int[][] mat = {{Integer.parseInt(f1c1.getText()), Integer.parseInt(f1c2.getText()), Integer.parseInt(f1c3.getText())},
+            {Integer.parseInt(f2c1.getText()), Integer.parseInt(f2c2.getText()), Integer.parseInt(f2c3.getText())},
+            {Integer.parseInt(f3c1.getText()), Integer.parseInt(f3c2.getText()), Integer.parseInt(f3c3.getText())}};
+            setMatriz3x3(mat);
+            b = true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: no se pudo cargar datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return b;
+    }
+
+    public boolean getMatrizPer5x5() {
+        boolean b = false;
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        JPanel panel4 = new JPanel();
+        JPanel panel5 = new JPanel();
+        GroupLayout layout1 = new GroupLayout(panel1);
+        GroupLayout layout2 = new GroupLayout(panel2);
+        GroupLayout layout3 = new GroupLayout(panel3);
+        GroupLayout layout4 = new GroupLayout(panel4);
+        GroupLayout layout5 = new GroupLayout(panel5);
+
+        JTextField f1c1 = new JTextField(null, "", 5);
+        JTextField f1c2 = new JTextField(null, "", 5);
+        JTextField f1c3 = new JTextField(null, "", 5);
+        JTextField f1c4 = new JTextField(null, "", 5);
+        JTextField f1c5 = new JTextField(null, "", 5);
+
+        layout1.setHorizontalGroup(
+                layout1.createSequentialGroup()
+                        .addComponent(f1c1)
+                        .addComponent(f1c2)
+                        .addComponent(f1c3)
+                        .addComponent(f1c4)
+                        .addComponent(f1c5)
+        );
+
+        JTextField f2c1 = new JTextField(null, "", 5);
+        JTextField f2c2 = new JTextField(null, "", 5);
+        JTextField f2c3 = new JTextField(null, "", 5);
+        JTextField f2c4 = new JTextField(null, "", 5);
+        JTextField f2c5 = new JTextField(null, "", 5);
+
+        layout2.setHorizontalGroup(
+                layout2.createSequentialGroup()
+                        .addComponent(f2c1)
+                        .addComponent(f2c2)
+                        .addComponent(f2c3)
+                        .addComponent(f2c4)
+                        .addComponent(f2c5)
+        );
+
+        JTextField f3c1 = new JTextField(null, "", 5);
+        JTextField f3c2 = new JTextField(null, "", 5);
+        JTextField f3c3 = new JTextField(null, "", 5);
+        JTextField f3c4 = new JTextField(null, "", 5);
+        JTextField f3c5 = new JTextField(null, "", 5);
+
+        layout3.setHorizontalGroup(
+                layout3.createSequentialGroup()
+                        .addComponent(f3c1)
+                        .addComponent(f3c2)
+                        .addComponent(f3c3)
+                        .addComponent(f3c4)
+                        .addComponent(f3c5)
+        );
+
+        JTextField f4c1 = new JTextField(null, "", 5);
+        JTextField f4c2 = new JTextField(null, "", 5);
+        JTextField f4c3 = new JTextField(null, "", 5);
+        JTextField f4c4 = new JTextField(null, "", 5);
+        JTextField f4c5 = new JTextField(null, "", 5);
+
+        layout4.setHorizontalGroup(
+                layout4.createSequentialGroup()
+                        .addComponent(f4c1)
+                        .addComponent(f4c2)
+                        .addComponent(f4c3)
+                        .addComponent(f4c4)
+                        .addComponent(f4c5)
+        );
+
+        JTextField f5c1 = new JTextField(null, "", 5);
+        JTextField f5c2 = new JTextField(null, "", 5);
+        JTextField f5c3 = new JTextField(null, "", 5);
+        JTextField f5c4 = new JTextField(null, "", 5);
+        JTextField f5c5 = new JTextField(null, "", 5);
+
+        layout5.setHorizontalGroup(
+                layout5.createSequentialGroup()
+                        .addComponent(f5c1)
+                        .addComponent(f5c2)
+                        .addComponent(f5c3)
+                        .addComponent(f5c4)
+                        .addComponent(f5c5)
+        );
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel1, "Ingresar Filtro 5x5, fila 1", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel2, "Ingresar Filtro 5x5, fila 2", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel3, "Ingresar Filtro 5x5, fila 3", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel4, "Ingresar Filtro 5x5, fila 4", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel5, "Ingresar Filtro 5x5, fila 5", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        try {
+            int[][] mat = {{Integer.parseInt(f1c1.getText()), Integer.parseInt(f1c2.getText()), Integer.parseInt(f1c3.getText()), Integer.parseInt(f1c4.getText()), Integer.parseInt(f1c5.getText())},
+            {Integer.parseInt(f2c1.getText()), Integer.parseInt(f2c2.getText()), Integer.parseInt(f2c3.getText()), Integer.parseInt(f2c4.getText()), Integer.parseInt(f2c5.getText())},
+            {Integer.parseInt(f3c1.getText()), Integer.parseInt(f3c2.getText()), Integer.parseInt(f3c3.getText()), Integer.parseInt(f3c4.getText()), Integer.parseInt(f3c5.getText())},
+            {Integer.parseInt(f4c1.getText()), Integer.parseInt(f4c2.getText()), Integer.parseInt(f4c3.getText()), Integer.parseInt(f4c4.getText()), Integer.parseInt(f4c5.getText())},
+            {Integer.parseInt(f5c1.getText()), Integer.parseInt(f5c2.getText()), Integer.parseInt(f5c3.getText()), Integer.parseInt(f5c4.getText()), Integer.parseInt(f5c5.getText())},};
+            setMatriz5x5(mat);
+            b = true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: no se pudo cargar datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return b;
+    }
+
+    public boolean getMatrizPer7x7() {
+        boolean b = false;
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        JPanel panel4 = new JPanel();
+        JPanel panel5 = new JPanel();
+        JPanel panel6 = new JPanel();
+        JPanel panel7 = new JPanel();
+        GroupLayout layout1 = new GroupLayout(panel1);
+        GroupLayout layout2 = new GroupLayout(panel2);
+        GroupLayout layout3 = new GroupLayout(panel3);
+        GroupLayout layout4 = new GroupLayout(panel4);
+        GroupLayout layout5 = new GroupLayout(panel5);
+        GroupLayout layout6 = new GroupLayout(panel6);
+        GroupLayout layout7 = new GroupLayout(panel7);
+
+        JTextField f1c1 = new JTextField(null, "", 5);
+        JTextField f1c2 = new JTextField(null, "", 5);
+        JTextField f1c3 = new JTextField(null, "", 5);
+        JTextField f1c4 = new JTextField(null, "", 5);
+        JTextField f1c5 = new JTextField(null, "", 5);
+        JTextField f1c6 = new JTextField(null, "", 5);
+        JTextField f1c7 = new JTextField(null, "", 5);
+
+        layout1.setHorizontalGroup(
+                layout1.createSequentialGroup()
+                        .addComponent(f1c1)
+                        .addComponent(f1c2)
+                        .addComponent(f1c3)
+                        .addComponent(f1c4)
+                        .addComponent(f1c5)
+                        .addComponent(f1c6)
+                        .addComponent(f1c7)
+        );
+
+        JTextField f2c1 = new JTextField(null, "", 5);
+        JTextField f2c2 = new JTextField(null, "", 5);
+        JTextField f2c3 = new JTextField(null, "", 5);
+        JTextField f2c4 = new JTextField(null, "", 5);
+        JTextField f2c5 = new JTextField(null, "", 5);
+        JTextField f2c6 = new JTextField(null, "", 5);
+        JTextField f2c7 = new JTextField(null, "", 5);
+
+        layout2.setHorizontalGroup(
+                layout2.createSequentialGroup()
+                        .addComponent(f2c1)
+                        .addComponent(f2c2)
+                        .addComponent(f2c3)
+                        .addComponent(f2c4)
+                        .addComponent(f2c5)
+                        .addComponent(f2c6)
+                        .addComponent(f2c7)
+        );
+
+        JTextField f3c1 = new JTextField(null, "", 5);
+        JTextField f3c2 = new JTextField(null, "", 5);
+        JTextField f3c3 = new JTextField(null, "", 5);
+        JTextField f3c4 = new JTextField(null, "", 5);
+        JTextField f3c5 = new JTextField(null, "", 5);
+        JTextField f3c6 = new JTextField(null, "", 5);
+        JTextField f3c7 = new JTextField(null, "", 5);
+
+        layout3.setHorizontalGroup(
+                layout3.createSequentialGroup()
+                        .addComponent(f3c1)
+                        .addComponent(f3c2)
+                        .addComponent(f3c3)
+                        .addComponent(f3c4)
+                        .addComponent(f3c5)
+                        .addComponent(f3c6)
+                        .addComponent(f3c7)
+        );
+
+        JTextField f4c1 = new JTextField(null, "", 5);
+        JTextField f4c2 = new JTextField(null, "", 5);
+        JTextField f4c3 = new JTextField(null, "", 5);
+        JTextField f4c4 = new JTextField(null, "", 5);
+        JTextField f4c5 = new JTextField(null, "", 5);
+        JTextField f4c6 = new JTextField(null, "", 5);
+        JTextField f4c7 = new JTextField(null, "", 5);
+
+        layout4.setHorizontalGroup(
+                layout4.createSequentialGroup()
+                        .addComponent(f4c1)
+                        .addComponent(f4c2)
+                        .addComponent(f4c3)
+                        .addComponent(f4c4)
+                        .addComponent(f4c5)
+                        .addComponent(f4c6)
+                        .addComponent(f4c7)
+        );
+
+        JTextField f5c1 = new JTextField(null, "", 5);
+        JTextField f5c2 = new JTextField(null, "", 5);
+        JTextField f5c3 = new JTextField(null, "", 5);
+        JTextField f5c4 = new JTextField(null, "", 5);
+        JTextField f5c5 = new JTextField(null, "", 5);
+        JTextField f5c6 = new JTextField(null, "", 5);
+        JTextField f5c7 = new JTextField(null, "", 5);
+
+        layout5.setHorizontalGroup(
+                layout5.createSequentialGroup()
+                        .addComponent(f5c1)
+                        .addComponent(f5c2)
+                        .addComponent(f5c3)
+                        .addComponent(f5c4)
+                        .addComponent(f5c5)
+                        .addComponent(f5c6)
+                        .addComponent(f5c7)
+        );
+
+        JTextField f6c1 = new JTextField(null, "", 5);
+        JTextField f6c2 = new JTextField(null, "", 5);
+        JTextField f6c3 = new JTextField(null, "", 5);
+        JTextField f6c4 = new JTextField(null, "", 5);
+        JTextField f6c5 = new JTextField(null, "", 5);
+        JTextField f6c6 = new JTextField(null, "", 5);
+        JTextField f6c7 = new JTextField(null, "", 5);
+
+        layout6.setHorizontalGroup(
+                layout6.createSequentialGroup()
+                        .addComponent(f6c1)
+                        .addComponent(f6c2)
+                        .addComponent(f6c3)
+                        .addComponent(f6c4)
+                        .addComponent(f6c5)
+                        .addComponent(f6c6)
+                        .addComponent(f6c7)
+        );
+
+        JTextField f7c1 = new JTextField(null, "", 5);
+        JTextField f7c2 = new JTextField(null, "", 5);
+        JTextField f7c3 = new JTextField(null, "", 5);
+        JTextField f7c4 = new JTextField(null, "", 5);
+        JTextField f7c5 = new JTextField(null, "", 5);
+        JTextField f7c6 = new JTextField(null, "", 5);
+        JTextField f7c7 = new JTextField(null, "", 5);
+
+        layout7.setHorizontalGroup(
+                layout7.createSequentialGroup()
+                        .addComponent(f7c1)
+                        .addComponent(f7c2)
+                        .addComponent(f7c3)
+                        .addComponent(f7c4)
+                        .addComponent(f7c5)
+                        .addComponent(f7c6)
+                        .addComponent(f7c7)
+        );
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel1, "Ingresar Filtro 7x7, fila 1", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel2, "Ingresar Filtro 7x7, fila 2", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel3, "Ingresar Filtro 7x7, fila 3", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel4, "Ingresar Filtro 7x7, fila 4", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel5, "Ingresar Filtro 7x7, fila 5", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel6, "Ingresar Filtro 7x7, fila 6", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        while (true) {
+            int res = JOptionPane.showConfirmDialog(null, panel7, "Ingresar Filtro 7x7, fila 7", JOptionPane.INFORMATION_MESSAGE);
+            if (res == 0) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se guardaron datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        try {
+            int[][] mat = {{Integer.parseInt(f1c1.getText()), Integer.parseInt(f1c2.getText()), Integer.parseInt(f1c3.getText()), Integer.parseInt(f1c4.getText()), Integer.parseInt(f1c5.getText()), Integer.parseInt(f1c6.getText()), Integer.parseInt(f1c7.getText())},
+            {Integer.parseInt(f2c1.getText()), Integer.parseInt(f2c2.getText()), Integer.parseInt(f2c3.getText()), Integer.parseInt(f2c4.getText()), Integer.parseInt(f2c5.getText()), Integer.parseInt(f2c6.getText()), Integer.parseInt(f2c7.getText())},
+            {Integer.parseInt(f3c1.getText()), Integer.parseInt(f3c2.getText()), Integer.parseInt(f3c3.getText()), Integer.parseInt(f3c4.getText()), Integer.parseInt(f3c5.getText()), Integer.parseInt(f3c6.getText()), Integer.parseInt(f3c7.getText())},
+            {Integer.parseInt(f4c1.getText()), Integer.parseInt(f4c2.getText()), Integer.parseInt(f4c3.getText()), Integer.parseInt(f4c4.getText()), Integer.parseInt(f4c5.getText()), Integer.parseInt(f4c6.getText()), Integer.parseInt(f4c7.getText())},
+            {Integer.parseInt(f5c1.getText()), Integer.parseInt(f5c2.getText()), Integer.parseInt(f5c3.getText()), Integer.parseInt(f5c4.getText()), Integer.parseInt(f5c5.getText()), Integer.parseInt(f5c6.getText()), Integer.parseInt(f5c7.getText())},
+            {Integer.parseInt(f6c1.getText()), Integer.parseInt(f6c2.getText()), Integer.parseInt(f6c3.getText()), Integer.parseInt(f6c4.getText()), Integer.parseInt(f6c5.getText()), Integer.parseInt(f6c6.getText()), Integer.parseInt(f6c7.getText())},
+            {Integer.parseInt(f7c1.getText()), Integer.parseInt(f7c2.getText()), Integer.parseInt(f7c3.getText()), Integer.parseInt(f7c4.getText()), Integer.parseInt(f7c5.getText()), Integer.parseInt(f7c6.getText()), Integer.parseInt(f7c7.getText())}};
+            setMatriz7x7(mat);
+            b = true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: no se pudo cargar datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return b;
+    }
+
+    public void aplicarMatriz7x7() {
+        JOptionPane jop = new JOptionPane("Selecionar filtro digital 7x7");
+        JPanel panel = new JPanel();
+        JCheckBox borde = new JCheckBox("Bordes");
+        JCheckBox laplace = new JCheckBox("Lapace");
+        JCheckBox SobelHz = new JCheckBox("Sobel Horizontal");
+        JCheckBox SobelVt = new JCheckBox("Sobel Vertical");
+        JCheckBox PrewittHz = new JCheckBox("Prewitt Horizontal");
+        JCheckBox PrewittVt = new JCheckBox("Prewitt Vertical");
+
+        borde.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (borde.isSelected()) {
+                    laplace.setSelected(false);
+                    SobelHz.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(12);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(borde);
+
+        laplace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (laplace.isSelected()) {
+                    borde.setSelected(false);
+                    SobelHz.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(13);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(laplace);
+
+        SobelHz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (SobelHz.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(14);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(SobelHz);
+
+        SobelVt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (SobelVt.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelHz.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(15);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(SobelVt);
+
+        PrewittHz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (PrewittHz.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    SobelHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(16);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(PrewittHz);
+
+        PrewittVt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (PrewittVt.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    SobelHz.setSelected(false);
+                    refresh();
+                    aplicarMatriz(17);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(PrewittVt);
+
+        int res = jop.showConfirmDialog(null, panel, "Selecionar Filtro 7x7", JOptionPane.WARNING_MESSAGE);
+
+        if (res == 0) {
+            datos.setImagen(tempImage);
+            tempImage = null;
+        } else {
+            tempImage = null;
+        }
+        this.repaint();
+    }
+
+    public void aplicarMatriz5x5() {
+        JOptionPane jop = new JOptionPane("Selecionar filtro digital 5x5");
+        JPanel panel = new JPanel();
+        JCheckBox borde = new JCheckBox("Bordes");
+        JCheckBox laplace = new JCheckBox("Lapace");
+        JCheckBox SobelHz = new JCheckBox("Sobel Horizontal");
+        JCheckBox SobelVt = new JCheckBox("Sobel Vertical");
+        JCheckBox PrewittHz = new JCheckBox("Prewitt Horizontal");
+        JCheckBox PrewittVt = new JCheckBox("Prewitt Vertical");
+
+        borde.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (borde.isSelected()) {
+                    laplace.setSelected(false);
+                    SobelHz.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(6);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(borde);
+
+        laplace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (laplace.isSelected()) {
+                    borde.setSelected(false);
+                    SobelHz.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(7);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(laplace);
+
+        SobelHz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (SobelHz.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(8);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(SobelHz);
+
+        SobelVt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (SobelVt.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelHz.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(9);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(SobelVt);
+
+        PrewittHz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (PrewittHz.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    SobelHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(10);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(PrewittHz);
+
+        PrewittVt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (PrewittVt.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    SobelHz.setSelected(false);
+                    refresh();
+                    aplicarMatriz(11);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(PrewittVt);
+
+        int res = jop.showConfirmDialog(null, panel, "Selecionar Filtro 5x5", JOptionPane.WARNING_MESSAGE);
+
+        if (res == 0) {
+            ImageIcon aiuda = new ImageIcon(datos.getImagen().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+            labelImg.setIcon(aiuda);
+            tempImage = null;
+            this.repaint();
+        } else {
+            tempImage = null;
+        }
+        this.repaint();
+    }
+
+    private void aplicarMatriz() {
+        JOptionPane jop = new JOptionPane("Selecionar filtro digital 3x3");
+        JPanel panel = new JPanel();
+        JCheckBox borde = new JCheckBox("Bordes");
+        JCheckBox laplace = new JCheckBox("Lapace");
+        JCheckBox SobelHz = new JCheckBox("Sobel Horizontal");
+        JCheckBox SobelVt = new JCheckBox("Sobel Vertical");
+        JCheckBox PrewittHz = new JCheckBox("Prewitt Horizontal");
+        JCheckBox PrewittVt = new JCheckBox("Prewitt Vertical");
+
+        borde.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (borde.isSelected()) {
+                    laplace.setSelected(false);
+                    SobelHz.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(0);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(borde);
+
+        laplace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (laplace.isSelected()) {
+                    borde.setSelected(false);
+                    SobelHz.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(1);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(laplace);
+
+        SobelHz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (SobelHz.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(2);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(SobelHz);
+
+        SobelVt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (SobelVt.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelHz.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(3);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(SobelVt);
+
+        PrewittHz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (PrewittHz.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    SobelHz.setSelected(false);
+                    PrewittVt.setSelected(false);
+                    refresh();
+                    aplicarMatriz(4);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(PrewittHz);
+
+        PrewittVt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (PrewittVt.isSelected()) {
+                    laplace.setSelected(false);
+                    borde.setSelected(false);
+                    SobelVt.setSelected(false);
+                    PrewittHz.setSelected(false);
+                    SobelHz.setSelected(false);
+                    refresh();
+                    aplicarMatriz(5);
+                } else {
+                    tempImage = null;
+                    repaint();
+                }
+            }
+        });
+        panel.add(PrewittVt);
+
+        int res = jop.showConfirmDialog(null, panel, "Selecionar Filtro 3x3", JOptionPane.WARNING_MESSAGE);
+
+        if (res == 0) {
+            
+            ImageIcon aiuda = new ImageIcon(datos.getImagen().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+            labelImg.setIcon(aiuda);
+            tempImage = null;
+            this.repaint();
+        } else {
+            tempImage = null;
+        }
+        this.repaint();
+    }
+
+    private void aplicarMatriz(int mat) {
+        switch (mat) {
+            case 0:
+                int[][] borde = {{-1, -1, -1},
+                {-1, 8, -1},
+                {-1, -1, -1}};
+                aplicarFiltro(borde);
+                break;
+            case 1:
+                int[][] laplace = {{0, -1, 0},
+                {-1, 4, -1},
+                {0, -1, 0}};
+                aplicarFiltro(laplace);
+                break;
+            case 2:
+                int[][] sobelHz = {{-1, -1, -1},
+                {0, 0, 0},
+                {1, 1, 1}};
+                aplicarFiltro(sobelHz);
+                break;
+            case 3:
+                int[][] sobelVt = {{-1, 0, 1},
+                {-1, 0, 1},
+                {-1, 0, 1}};
+                aplicarFiltro(sobelVt);
+                break;
+            case 4:
+                int[][] prewittHz = {{-1, -2, -1},
+                {0, 0, 0},
+                {1, 2, 1}};
+                aplicarFiltro(prewittHz);
+                break;
+            case 5:
+                int[][] prewittVt = {{-1, 0, 1},
+                {-2, 0, 2},
+                {-1, 0, 1}};
+                aplicarFiltro(prewittVt);
+                break;
+            case 6:
+                int[][] borde5x5 = {{-1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1},
+                {-1, -1, 8, -1, -1},
+                {-1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1}};
+                aplicarFiltro5x5(borde5x5);
+                break;
+            case 7:
+                int[][] laplace5x5 = {{0, 0, -1, 0, 0},
+                {0, 0, -1, 0, 0},
+                {-1, -1, 4, -1, -1},
+                {0, 0, -1, 0, 0},
+                {0, 0, -1, 0, 0}};
+                aplicarFiltro5x5(laplace5x5);
+                break;
+            case 8:
+                int[][] sobelHz5x5 = {{-1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1},
+                {0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}};
+                aplicarFiltro5x5(sobelHz5x5);
+                break;
+            case 9:
+                int[][] sobelVt5x5 = {{-1, -1, 0, 1, 1},
+                {-1, -1, 0, 1, 1},
+                {-1, -1, 0, 1, 1},
+                {-1, -1, 0, 1, 1},
+                {-1, -1, 0, 1, 1}};
+                aplicarFiltro5x5(sobelVt5x5);
+                break;
+            case 10:
+                int[][] prewittHz5x5 = {{-1, -1, -2, -1, -1},
+                {-1, -1, -2, -1, -1},
+                {0, 0, 0, 0, 0},
+                {1, 1, 2, 1, 1},
+                {1, 1, 2, 1, 1}};
+                aplicarFiltro5x5(prewittHz5x5);
+                break;
+            case 11:
+                int[][] prewittVt5x5 = {{-1, -1, 0, 1, 1},
+                {-1, -1, 0, 1, 1},
+                {-2, -2, 0, 2, 2},
+                {-1, -1, 0, 1, 1},
+                {-1, -1, 0, 1, 1}};
+                aplicarFiltro5x5(prewittVt5x5);
+                break;
+            case 12:
+                int[][] borde7x7 = {{-1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, 8, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1, -1}};
+                aplicarFiltro7x7(borde7x7);
+                break;
+            case 13:
+                int[][] laplace7x7 = {{0, 0, 0, -1, 0, 0, 0},
+                {0, 0, 0, -1, 0, 0, 0},
+                {0, 0, 0, -1, 0, 0, 0},
+                {-1, -1, -1, 4, -1, -1, -1},
+                {0, 0, 0, -1, 0, 0, 0},
+                {0, 0, 0, -1, 0, 0, 0},
+                {0, 0, 0, -1, 0, 0, 0}};
+                aplicarFiltro7x7(laplace7x7);
+                break;
+            case 14:
+                int[][] sobelHz7x7 = {{-1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1, -1, -1},
+                {0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1}};
+                aplicarFiltro7x7(sobelHz7x7);
+                break;
+            case 15:
+                int[][] sobelVt7x7 = {{-1, -1, -1, 0, 1, 1, 1},
+                {-1, -1, -1, 0, 1, 1, 1},
+                {-1, -1, -1, 0, 1, 1, 1},
+                {-1, -1, -1, 0, 1, 1, 1},
+                {-1, -1, -1, 0, 1, 1, 1},
+                {-1, -1, -1, 0, 1, 1, 1},
+                {-1, -1, -1, 0, 1, 1, 1}};
+                aplicarFiltro7x7(sobelVt7x7);
+                break;
+            case 16:
+                int[][] prewittHz7x7 = {{-1, -1, -1, -2, -1, -1, -1},
+                {-1, -1, -1, -2, -1, -1, -1},
+                {-1, -1, -1, -2, -1, -1, -1},
+                {0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 2, 1, 1, 1},
+                {1, 1, 1, 2, 1, 1, 1},
+                {1, 1, 1, 2, 1, 1, 1}};
+                aplicarFiltro7x7(prewittHz7x7);
+                break;
+            case 17:
+                int[][] prewittVt7x7 = {{-20, -20, -20, -20, -20, -20, -20},
+                {-20, -20, -20, 25, -20, -20, -20},
+                {-20, -20, 25, 25, 25, -20, -20},
+                {-20, 25, 25, 25, 25, 25, -20},
+                {25, 25, 25, 25, 25, 25, 25},
+                {-20, -20, -20, -20, -20, -20, -20},
+                {-20, -20, -20, -20, -20, -20, -20}};
+                aplicarFiltro7x7(prewittVt7x7);
+                break;
+            case 18:
+                if (getMatrizPer3x3() == true) {
+                    aplicarFiltro(getMatriz3x3());
+                }
+                break;
+            case 19:
+                if (getMatrizPer5x5() == true) {
+                    aplicarFiltro(getMatriz5x5());
+                }
+                break;
+            case 20:
+                if (getMatrizPer7x7() == true) {
+                    aplicarFiltro(getMatriz7x7());
+                }
+                break;
+        }
+
+        this.repaint();
+    }
+
+    public void barra(int max) {
+        frame = new Barra2(max);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void contarBarra() {
+        frame.oneMore();
+    }
+
+    public void eliminarBarra() {
+        frame.eliminar();
+    }
+
+    private void aplicarFiltro5x5(int[][] matriz5x5) {
+        BufferedImage image = convertToBufferedImage(datos.getImagen());
+        Color[][] temimage;
+        int width = image.getWidth();
+        int height = image.getHeight();
+        temimage = new Color[width][height];
+
+        barra(height - 4);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel = image.getRGB(x, y);
+                int r = (pixel >> 16) & 0xff;
+                int g = (pixel >> 8) & 0xff;
+                int b = pixel & 0xff;
+
+                temimage[x][y] = new Color(r, g, b);
+                image.setRGB(x, y, pixel);
+            }
+        }
+
+        for (int y = 2; y < height - 2; y++) {
+            contarBarra();
+            for (int x = 2; x < width - 2; x++) {
+                int pxR = (matriz5x5[0][0] * temimage[x - 2][y - 2].getRed() + matriz5x5[0][1] * temimage[x - 1][y - 2].getRed() + matriz5x5[0][2] * temimage[x][y - 2].getRed() + matriz5x5[0][3] * temimage[x + 1][y - 2].getRed() + matriz5x5[0][4] * temimage[x + 2][y - 2].getRed()
+                        + matriz5x5[1][0] * temimage[x - 2][y - 1].getRed() + matriz5x5[1][1] * temimage[x - 1][y - 1].getRed() + matriz5x5[1][2] * temimage[x][y - 1].getRed() + matriz5x5[1][3] * temimage[x + 1][y - 1].getRed() + matriz5x5[1][4] * temimage[x + 2][y - 1].getRed()
+                        + matriz5x5[2][0] * temimage[x - 2][y].getRed() + matriz5x5[2][1] * temimage[x - 1][y].getRed() + matriz5x5[2][2] * temimage[x][y].getRed() + matriz5x5[2][3] * temimage[x + 1][y].getRed() + matriz5x5[2][4] * temimage[x + 2][y].getRed()
+                        + matriz5x5[3][0] * temimage[x - 2][y + 1].getRed() + matriz5x5[3][1] * temimage[x - 1][y + 1].getRed() + matriz5x5[3][2] * temimage[x][y + 1].getRed() + matriz5x5[3][3] * temimage[x + 1][y + 1].getRed() + matriz5x5[3][4] * temimage[x + 2][y + 1].getRed()
+                        + matriz5x5[4][0] * temimage[x - 2][y + 2].getRed() + matriz5x5[4][1] * temimage[x - 1][y + 2].getRed() + matriz5x5[4][2] * temimage[x][y + 2].getRed() + matriz5x5[4][3] * temimage[x + 1][y + 2].getRed() + matriz5x5[4][4] * temimage[x + 2][y + 2].getRed());
+                pxR = (int) Math.sqrt(pxR * pxR);
+                if (pxR > 255) {
+                    pxR = 255;
+                }
+                if (pxR < 0) {
+                    pxR = 0;
+                }
+
+                int pxG = (matriz5x5[0][0] * temimage[x - 2][y - 2].getGreen() + matriz5x5[0][1] * temimage[x - 1][y - 2].getGreen() + matriz5x5[0][2] * temimage[x][y - 2].getGreen() + matriz5x5[0][3] * temimage[x + 1][y - 2].getGreen() + matriz5x5[0][4] * temimage[x + 2][y - 2].getGreen()
+                        + matriz5x5[1][0] * temimage[x - 2][y - 1].getGreen() + matriz5x5[1][1] * temimage[x - 1][y - 1].getGreen() + matriz5x5[1][2] * temimage[x][y - 1].getGreen() + matriz5x5[1][3] * temimage[x + 1][y - 1].getGreen() + matriz5x5[1][4] * temimage[x + 2][y - 1].getGreen()
+                        + matriz5x5[2][0] * temimage[x - 2][y].getGreen() + matriz5x5[2][1] * temimage[x - 1][y].getGreen() + matriz5x5[2][2] * temimage[x][y].getGreen() + matriz5x5[2][3] * temimage[x + 1][y].getGreen() + matriz5x5[2][4] * temimage[x + 2][y].getGreen()
+                        + matriz5x5[3][0] * temimage[x - 2][y + 1].getGreen() + matriz5x5[3][1] * temimage[x - 1][y + 1].getGreen() + matriz5x5[3][2] * temimage[x][y + 1].getGreen() + matriz5x5[3][3] * temimage[x + 1][y + 1].getGreen() + matriz5x5[3][4] * temimage[x + 2][y + 1].getGreen()
+                        + matriz5x5[4][0] * temimage[x - 2][y + 2].getGreen() + matriz5x5[4][1] * temimage[x - 1][y + 2].getGreen() + matriz5x5[4][2] * temimage[x][y + 2].getGreen() + matriz5x5[4][3] * temimage[x + 1][y + 2].getGreen() + matriz5x5[4][4] * temimage[x + 2][y + 2].getGreen());
+                pxG = (int) Math.sqrt(pxG * pxG);
+                if (pxG > 255) {
+                    pxG = 255;
+                }
+                if (pxG < 0) {
+                    pxG = 0;
+                }
+
+                int pxB = (matriz5x5[0][0] * temimage[x - 2][y - 2].getBlue() + matriz5x5[0][1] * temimage[x - 1][y - 2].getBlue() + matriz5x5[0][2] * temimage[x][y - 2].getBlue() + matriz5x5[0][3] * temimage[x + 1][y - 2].getBlue() + matriz5x5[0][4] * temimage[x + 2][y - 2].getBlue()
+                        + matriz5x5[1][0] * temimage[x - 2][y - 1].getBlue() + matriz5x5[1][1] * temimage[x - 1][y - 1].getBlue() + matriz5x5[1][2] * temimage[x][y - 1].getBlue() + matriz5x5[1][3] * temimage[x + 1][y - 1].getBlue() + matriz5x5[1][4] * temimage[x + 2][y - 1].getBlue()
+                        + matriz5x5[2][0] * temimage[x - 2][y].getBlue() + matriz5x5[2][1] * temimage[x - 1][y].getBlue() + matriz5x5[2][2] * temimage[x][y].getBlue() + matriz5x5[2][3] * temimage[x + 1][y].getBlue() + matriz5x5[2][4] * temimage[x + 2][y].getBlue()
+                        + matriz5x5[3][0] * temimage[x - 2][y + 1].getBlue() + matriz5x5[3][1] * temimage[x - 1][y + 1].getBlue() + matriz5x5[3][2] * temimage[x][y + 1].getBlue() + matriz5x5[3][3] * temimage[x + 1][y + 1].getBlue() + matriz5x5[3][4] * temimage[x + 2][y + 1].getBlue()
+                        + matriz5x5[4][0] * temimage[x - 2][y + 2].getBlue() + matriz5x5[4][1] * temimage[x - 1][y + 2].getBlue() + matriz5x5[4][2] * temimage[x][y + 2].getBlue() + matriz5x5[4][3] * temimage[x + 1][y + 2].getBlue() + matriz5x5[4][4] * temimage[x + 2][y + 2].getBlue());
+                pxB = (int) Math.sqrt(pxB * pxB);
+                if (pxB > 255) {
+                    pxB = 255;
+                }
+                if (pxB < 0) {
+                    pxB = 0;
+                }
+                Color pixel = new Color(pxR, pxG, pxB);
+                image.setRGB(x, y, pixel.getRGB());
+            }
+        }
+        tempImage = (Image) image;
+tempImage = (Image) image;
+        datos.setImagen(tempImage);
+        ImageIcon aiuda = new ImageIcon(datos.getImagen().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+            labelImg.setIcon(aiuda);
+        eliminarBarra();
+        this.repaint();
+    }
+
+    private void aplicarFiltro7x7(int[][] matriz7x7) {
+        BufferedImage image = convertToBufferedImage(datos.getImagen());
+        Color[][] temimage;
+        int width = image.getWidth();
+        int height = image.getHeight();
+        temimage = new Color[width][height];
+
+        barra(height - 6);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel = image.getRGB(x, y);
+                int r = (pixel >> 16) & 0xff;
+                int g = (pixel >> 8) & 0xff;
+                int b = pixel & 0xff;
+
+                temimage[x][y] = new Color(r, g, b);
+                image.setRGB(x, y, pixel);
+            }
+        }
+
+        for (int y = 3; y < height - 3; y++) {
+            contarBarra();
+            for (int x = 3; x < width - 3; x++) {
+                int pxR = (matriz7x7[0][0] * temimage[x - 3][y - 3].getRed() + matriz7x7[0][1] * temimage[x - 2][y - 3].getRed() + matriz7x7[0][2] * temimage[x - 1][y - 3].getRed() + matriz7x7[0][3] * temimage[x][y - 3].getRed() + matriz7x7[0][4] * temimage[x + 1][y - 3].getRed() + matriz7x7[0][5] * temimage[x + 2][y - 3].getRed() + matriz7x7[0][6] * temimage[x + 3][y - 3].getRed()
+                        + matriz7x7[1][0] * temimage[x - 3][y - 2].getRed() + matriz7x7[1][1] * temimage[x - 2][y - 2].getRed() + matriz7x7[1][2] * temimage[x - 1][y - 2].getRed() + matriz7x7[1][3] * temimage[x][y - 2].getRed() + matriz7x7[1][4] * temimage[x + 1][y - 2].getRed() + matriz7x7[1][5] * temimage[x + 2][y - 2].getRed() + matriz7x7[1][6] * temimage[x + 3][y - 2].getRed()
+                        + matriz7x7[2][0] * temimage[x - 3][y - 1].getRed() + matriz7x7[2][1] * temimage[x - 2][y - 1].getRed() + matriz7x7[2][2] * temimage[x - 1][y - 1].getRed() + matriz7x7[2][3] * temimage[x][y - 1].getRed() + matriz7x7[2][4] * temimage[x + 1][y - 1].getRed() + matriz7x7[2][5] * temimage[x + 2][y - 1].getRed() + matriz7x7[2][6] * temimage[x + 3][y - 1].getRed()
+                        + matriz7x7[3][0] * temimage[x - 3][y].getRed() + matriz7x7[3][1] * temimage[x - 2][y].getRed() + matriz7x7[3][2] * temimage[x - 1][y].getRed() + matriz7x7[3][3] * temimage[x][y].getRed() + matriz7x7[3][4] * temimage[x + 1][y].getRed() + matriz7x7[3][5] * temimage[x + 2][y].getRed() + matriz7x7[3][6] * temimage[x + 3][y].getRed()
+                        + matriz7x7[4][0] * temimage[x - 3][y + 1].getRed() + matriz7x7[4][1] * temimage[x - 2][y + 1].getRed() + matriz7x7[4][2] * temimage[x - 1][y + 1].getRed() + matriz7x7[4][3] * temimage[x][y + 1].getRed() + matriz7x7[4][4] * temimage[x + 1][y + 1].getRed() + matriz7x7[4][5] * temimage[x + 2][y + 1].getRed() + matriz7x7[4][6] * temimage[x + 3][y + 1].getRed()
+                        + matriz7x7[5][0] * temimage[x - 3][y + 2].getRed() + matriz7x7[5][1] * temimage[x - 2][y + 2].getRed() + matriz7x7[5][2] * temimage[x - 1][y + 2].getRed() + matriz7x7[5][3] * temimage[x][y + 2].getRed() + matriz7x7[5][4] * temimage[x + 1][y + 2].getRed() + matriz7x7[5][5] * temimage[x + 2][y + 2].getRed() + matriz7x7[5][6] * temimage[x + 3][y + 2].getRed()
+                        + matriz7x7[6][0] * temimage[x - 3][y + 3].getRed() + matriz7x7[6][1] * temimage[x - 2][y + 3].getRed() + matriz7x7[6][2] * temimage[x - 1][y + 3].getRed() + matriz7x7[6][3] * temimage[x][y + 3].getRed() + matriz7x7[6][4] * temimage[x + 1][y + 3].getRed() + matriz7x7[6][5] * temimage[x + 2][y + 3].getRed() + matriz7x7[6][6] * temimage[x + 3][y + 3].getRed());
+                pxR = (int) Math.sqrt(pxR * pxR);
+                if (pxR > 255) {
+                    pxR = 255;
+                }
+                if (pxR < 0) {
+                    pxR = 0;
+                }
+
+                int pxG = (matriz7x7[0][0] * temimage[x - 3][y - 3].getGreen() + matriz7x7[0][1] * temimage[x - 2][y - 3].getGreen() + matriz7x7[0][2] * temimage[x - 1][y - 3].getGreen() + matriz7x7[0][3] * temimage[x][y - 3].getGreen() + matriz7x7[0][4] * temimage[x + 1][y - 3].getGreen() + matriz7x7[0][5] * temimage[x + 2][y - 3].getGreen() + matriz7x7[0][6] * temimage[x + 3][y - 3].getGreen()
+                        + matriz7x7[1][0] * temimage[x - 3][y - 2].getGreen() + matriz7x7[1][1] * temimage[x - 2][y - 2].getGreen() + matriz7x7[1][2] * temimage[x - 1][y - 2].getGreen() + matriz7x7[1][3] * temimage[x][y - 2].getGreen() + matriz7x7[1][4] * temimage[x + 1][y - 2].getGreen() + matriz7x7[1][5] * temimage[x + 2][y - 2].getGreen() + matriz7x7[1][6] * temimage[x + 3][y - 2].getGreen()
+                        + matriz7x7[2][0] * temimage[x - 3][y - 1].getGreen() + matriz7x7[2][1] * temimage[x - 2][y - 1].getGreen() + matriz7x7[2][2] * temimage[x - 1][y - 1].getGreen() + matriz7x7[2][3] * temimage[x][y - 1].getGreen() + matriz7x7[2][4] * temimage[x + 1][y - 1].getGreen() + matriz7x7[2][5] * temimage[x + 2][y - 1].getGreen() + matriz7x7[2][6] * temimage[x + 3][y - 1].getGreen()
+                        + matriz7x7[3][0] * temimage[x - 3][y].getGreen() + matriz7x7[3][1] * temimage[x - 2][y].getGreen() + matriz7x7[3][2] * temimage[x - 1][y].getGreen() + matriz7x7[3][3] * temimage[x][y].getGreen() + matriz7x7[3][4] * temimage[x + 1][y].getGreen() + matriz7x7[3][5] * temimage[x + 2][y].getGreen() + matriz7x7[3][6] * temimage[x + 3][y].getGreen()
+                        + matriz7x7[4][0] * temimage[x - 3][y + 1].getGreen() + matriz7x7[4][1] * temimage[x - 2][y + 1].getGreen() + matriz7x7[4][2] * temimage[x - 1][y + 1].getGreen() + matriz7x7[4][3] * temimage[x][y + 1].getGreen() + matriz7x7[4][4] * temimage[x + 1][y + 1].getGreen() + matriz7x7[4][5] * temimage[x + 2][y + 1].getGreen() + matriz7x7[4][6] * temimage[x + 3][y + 1].getGreen()
+                        + matriz7x7[5][0] * temimage[x - 3][y + 2].getGreen() + matriz7x7[5][1] * temimage[x - 2][y + 2].getGreen() + matriz7x7[5][2] * temimage[x - 1][y + 2].getGreen() + matriz7x7[5][3] * temimage[x][y + 2].getGreen() + matriz7x7[5][4] * temimage[x + 1][y + 2].getGreen() + matriz7x7[5][5] * temimage[x + 2][y + 2].getGreen() + matriz7x7[5][6] * temimage[x + 3][y + 2].getGreen()
+                        + matriz7x7[6][0] * temimage[x - 3][y + 3].getGreen() + matriz7x7[6][1] * temimage[x - 2][y + 3].getGreen() + matriz7x7[6][2] * temimage[x - 1][y + 3].getGreen() + matriz7x7[6][3] * temimage[x][y + 3].getGreen() + matriz7x7[6][4] * temimage[x + 1][y + 3].getGreen() + matriz7x7[6][5] * temimage[x + 2][y + 3].getGreen() + matriz7x7[6][6] * temimage[x + 3][y + 3].getGreen());
+                pxG = (int) Math.sqrt(pxG * pxG);
+                if (pxG > 255) {
+                    pxG = 255;
+                }
+                if (pxG < 0) {
+                    pxG = 0;
+                }
+
+                int pxB = (matriz7x7[0][0] * temimage[x - 3][y - 3].getBlue() + matriz7x7[0][1] * temimage[x - 2][y - 3].getBlue() + matriz7x7[0][2] * temimage[x - 1][y - 3].getBlue() + matriz7x7[0][3] * temimage[x][y - 3].getBlue() + matriz7x7[0][4] * temimage[x + 1][y - 3].getBlue() + matriz7x7[0][5] * temimage[x + 2][y - 3].getBlue() + matriz7x7[0][6] * temimage[x + 3][y - 3].getBlue()
+                        + matriz7x7[1][0] * temimage[x - 3][y - 2].getBlue() + matriz7x7[1][1] * temimage[x - 2][y - 2].getBlue() + matriz7x7[1][2] * temimage[x - 1][y - 2].getBlue() + matriz7x7[1][3] * temimage[x][y - 2].getBlue() + matriz7x7[1][4] * temimage[x + 1][y - 2].getBlue() + matriz7x7[1][5] * temimage[x + 2][y - 2].getBlue() + matriz7x7[1][6] * temimage[x + 3][y - 2].getBlue()
+                        + matriz7x7[2][0] * temimage[x - 3][y - 1].getBlue() + matriz7x7[2][1] * temimage[x - 2][y - 1].getBlue() + matriz7x7[2][2] * temimage[x - 1][y - 1].getBlue() + matriz7x7[2][3] * temimage[x][y - 1].getBlue() + matriz7x7[2][4] * temimage[x + 1][y - 1].getBlue() + matriz7x7[2][5] * temimage[x + 2][y - 1].getBlue() + matriz7x7[2][6] * temimage[x + 3][y - 1].getBlue()
+                        + matriz7x7[3][0] * temimage[x - 3][y].getBlue() + matriz7x7[3][1] * temimage[x - 2][y].getBlue() + matriz7x7[3][2] * temimage[x - 1][y].getBlue() + matriz7x7[3][3] * temimage[x][y].getBlue() + matriz7x7[3][4] * temimage[x + 1][y].getBlue() + matriz7x7[3][5] * temimage[x + 2][y].getBlue() + matriz7x7[3][6] * temimage[x + 3][y].getBlue()
+                        + matriz7x7[4][0] * temimage[x - 3][y + 1].getBlue() + matriz7x7[4][1] * temimage[x - 2][y + 1].getBlue() + matriz7x7[4][2] * temimage[x - 1][y + 1].getBlue() + matriz7x7[4][3] * temimage[x][y + 1].getBlue() + matriz7x7[4][4] * temimage[x + 1][y + 1].getBlue() + matriz7x7[4][5] * temimage[x + 2][y + 1].getBlue() + matriz7x7[4][6] * temimage[x + 3][y + 1].getBlue()
+                        + matriz7x7[5][0] * temimage[x - 3][y + 2].getBlue() + matriz7x7[5][1] * temimage[x - 2][y + 2].getBlue() + matriz7x7[5][2] * temimage[x - 1][y + 2].getBlue() + matriz7x7[5][3] * temimage[x][y + 2].getBlue() + matriz7x7[5][4] * temimage[x + 1][y + 2].getBlue() + matriz7x7[5][5] * temimage[x + 2][y + 2].getBlue() + matriz7x7[5][6] * temimage[x + 3][y + 2].getBlue()
+                        + matriz7x7[6][0] * temimage[x - 3][y + 3].getBlue() + matriz7x7[6][1] * temimage[x - 2][y + 3].getBlue() + matriz7x7[6][2] * temimage[x - 1][y + 3].getBlue() + matriz7x7[6][3] * temimage[x][y + 3].getBlue() + matriz7x7[6][4] * temimage[x + 1][y + 3].getBlue() + matriz7x7[6][5] * temimage[x + 2][y + 3].getBlue() + matriz7x7[6][6] * temimage[x + 3][y + 3].getRed());
+                pxB = (int) Math.sqrt(pxB * pxB);
+                if (pxB > 255) {
+                    pxB = 255;
+                }
+                if (pxB < 0) {
+                    pxB = 0;
+                }
+                Color pixel = new Color(pxR, pxG, pxB);
+                image.setRGB(x, y, pixel.getRGB());
+            }
+        }
+        tempImage = (Image) image;
+tempImage = (Image) image;
+        datos.setImagen(tempImage);
+        ImageIcon aiuda = new ImageIcon(datos.getImagen().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+            labelImg.setIcon(aiuda);
+        eliminarBarra();
+        this.repaint();
+    }
+
+    private void aplicarFiltro(int[][] matriz) {
+        BufferedImage image = convertToBufferedImage(datos.getImagen());
+        Color[][] temimage;
+        int width = image.getWidth();
+        int height = image.getHeight();
+        temimage = new Color[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel = image.getRGB(x, y);
+                int r = (pixel >> 16) & 0xff;
+                int g = (pixel >> 8) & 0xff;
+                int b = pixel & 0xff;
+
+                temimage[x][y] = new Color(r, g, b);
+                image.setRGB(x, y, pixel);
+            }
+        }
+        barra(height - 2);
+
+        for (int y = 1; y < height - 1; y++) {
+            contarBarra();
+            for (int x = 1; x < width - 1; x++) {
+                int pxR = (matriz[0][0] * temimage[x - 1][y - 1].getRed() + matriz[0][1] * temimage[x][y - 1].getRed() + matriz[0][2] * temimage[x + 1][y - 1].getRed()
+                        + matriz[1][0] * temimage[x - 1][y].getRed() + matriz[1][1] * temimage[x][y].getRed() + matriz[1][2] * temimage[x + 1][y].getRed()
+                        + matriz[2][0] * temimage[x - 1][y + 1].getRed() + matriz[2][1] * temimage[x][y + 1].getRed() + matriz[2][2] * temimage[x + 1][y + 1].getRed());
+                pxR = (int) Math.sqrt(pxR * pxR);
+                if (pxR > 255) {
+                    pxR = 255;
+                }
+                if (pxR < 0) {
+                    pxR = 0;
+                }
+
+                int pxG = (matriz[0][0] * temimage[x - 1][y - 1].getGreen() + matriz[0][1] * temimage[x][y - 1].getGreen() + matriz[0][2] * temimage[x + 1][y - 1].getGreen()
+                        + matriz[1][0] * temimage[x - 1][y].getGreen() + matriz[1][1] * temimage[x][y].getGreen() + matriz[1][2] * temimage[x + 1][y].getGreen()
+                        + matriz[2][0] * temimage[x - 1][y + 1].getGreen() + matriz[2][1] * temimage[x][y + 1].getGreen() + matriz[2][2] * temimage[x + 1][y + 1].getGreen());
+                pxG = (int) Math.sqrt(pxG * pxG);
+                if (pxG > 255) {
+                    pxG = 255;
+                }
+                if (pxG < 0) {
+                    pxG = 0;
+                }
+
+                int pxB = (matriz[0][0] * temimage[x - 1][y - 1].getBlue() + matriz[0][1] * temimage[x][y - 1].getBlue() + matriz[0][2] * temimage[x + 1][y - 1].getBlue()
+                        + matriz[1][0] * temimage[x - 1][y].getBlue() + matriz[1][1] * temimage[x][y].getBlue() + matriz[1][2] * temimage[x + 1][y].getBlue()
+                        + matriz[2][0] * temimage[x - 1][y + 1].getBlue() + matriz[2][1] * temimage[x][y + 1].getBlue() + matriz[2][2] * temimage[x + 1][y + 1].getBlue());
+                pxB = (int) Math.sqrt(pxB * pxB);
+                if (pxB > 255) {
+                    pxB = 255;
+                }
+                if (pxB < 0) {
+                    pxB = 0;
+                }
+                Color pixel = new Color(pxR, pxG, pxB);
+                image.setRGB(x, y, pixel.getRGB());
+            }
+        }
+        tempImage = (Image) image;
+        datos.setImagen(tempImage);
+        ImageIcon aiuda = new ImageIcon(datos.getImagen().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH));
+            labelImg.setIcon(aiuda);
+
+        eliminarBarra();
+        this.repaint();
+    }
+
+    private void refresh() {
+        String ruta = Buscar.getSelectedFile().getPath();
+        datos.setImagen(Toolkit.getDefaultToolkit().getImage(cambiarTipoRuta(ruta)));
+        tempImage = null;
+        brilloNum = 0;
+        negativoNum = 0;
+
+        repaint();
     }
 }

@@ -1082,38 +1082,7 @@ public class Imagen extends JFrame{
         int width = image.getWidth();
         int height = image.getHeight();
         temimage = new Color[width][height];
-        
-/*        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int pixel = image.getRGB(x, y);
-                int r = (pixel >> 16) & 0xff;
-                int g = (pixel >> 8) & 0xff;
-                int b = pixel & 0xff;
-                
-                // calcular promedio
-                int avg = (r+g+b)/3;
-                
-                temimage[x][y] = avg;
-                // replace RGB value with average
-                pixel = (avg << 24) | (avg << 16) | (avg << 8) | avg;
-                image.setRGB(x, y, pixel);
-            }
-        }
-        
-        for (int y = 1; y < height-1; y++) {
-            bar.setValue(y);
-            for (int x = 1; x < width-1; x++) {
-                int px= (matriz[0][0]*temimage[x-1][y-1] + matriz[0][1]*temimage[x][y-1] + matriz[0][2]*temimage[x+1][y-1] +
-                         matriz[1][0]*temimage[x-1][y]   + matriz[1][1]*temimage[x][y]   + matriz[1][2]*temimage[x+1][y] + +
-                         matriz[2][0]*temimage[x-1][y+1] + matriz[2][1]*temimage[x][y+1] + matriz[1][2]*temimage[x+1][y+1]);
-                px=(int)Math.sqrt(px*px);
-                if (px>255) px=255;
-                if (px<0)   px=0;
-                Color pixel= new Color(px,px,px);
-                image.setRGB(x, y, pixel.getRGB());
-            }
-        }*/
-        
+              
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int pixel = image.getRGB(x, y);
