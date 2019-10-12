@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  */
 public class Panel extends javax.swing.JFrame {
 
-    JFileChooser myDocumento;
+    JFileChooser myDocumento, extra;
     Integer alto;
     Integer ancho;
     Icon image;
@@ -244,6 +244,7 @@ public class Panel extends javax.swing.JFrame {
             jTextField3.setText("" + pixel + " pixeles");
             this.setSize(image.getIconWidth(), image.getIconHeight());
         }
+        extra=myDocumento;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
